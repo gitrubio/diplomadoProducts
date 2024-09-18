@@ -57,10 +57,17 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       animation: {
+        shimmer: "shimmer 8s infinite",
         marquee: "marquee var(--duration) linear infinite",
+        slide: 'slide-animation 6s ease-in-out infinite', // custom animation
         "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
       keyframes: {
+        'slide-animation': {
+          '0%': { transform: 'translateX(12rem) rotate(12deg)', opacity: '0' },
+          '50%': { transform: 'translateX(-32rem) rotate(12deg)', opacity: '0' }, // Punto máximo con mayor visibilidad
+          '100%': { transform: 'translateX(12rem) rotate(12deg)', opacity: '0.1' }, // Regreso con opacidad 0
+        },
         marquee: {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(calc(-100% - var(--gap)))" },
@@ -68,6 +75,14 @@ module.exports = {
         "marquee-vertical": {
           from: { transform: "translateY(0)" },
           to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
+        shimmer: {
+          "0%, 90%, 100%": {
+            "background-position": "calc(-100% - var(--shimmer-width)) 0",
+          },
+          "30%, 60%": {
+            "background-position": "calc(100% + var(--shimmer-width)) 0",
+          },
         },
       },
     },

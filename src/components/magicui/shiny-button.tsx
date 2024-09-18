@@ -23,7 +23,7 @@ const animationProps = {
   },
 } as AnimationProps;
 interface ShinyButtonProps {
-  text: string;
+  text?: string;
   className?: string;
 }
 const ShinyButton = ({
