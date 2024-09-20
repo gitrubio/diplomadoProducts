@@ -9,6 +9,7 @@ import {
 import MobileNav from '@/components/navBar/MobileNav';
 import NavBar from '@/components/navBar/NavBar';
 import Productsview from '@/views/Products.view';
+import Offerts from '@/views/Offerts.view';
 
 const navigation = {
     categories: [
@@ -49,7 +50,7 @@ export default function App() {
                 <Route path='/tienda' element={<Productsview/>} />
                 <Route path='/nosotros' element={'hello'} />
                 <Route path='/contacto' element={'hello'} />
-                <Route path='/ofertas' element={'hello'} />
+                <Route path='/ofertas' element={<Offerts/>} />
                 <Route path='/*' element={'NotFount'} />     
             </Routes>
         </div>

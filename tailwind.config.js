@@ -61,8 +61,17 @@ module.exports = {
         marquee: "marquee var(--duration) linear infinite",
         slide: 'slide-animation 6s ease-in-out infinite', // custom animation
         "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
+         "meteor-effect": "meteor 5s linear infinite",
       },
       keyframes: {
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: "0",
+          },
+        },
         'slide-animation': {
           '0%': { transform: 'translateX(12rem) rotate(12deg)', opacity: '0' },
           '50%': { transform: 'translateX(-32rem) rotate(12deg)', opacity: '0' }, // Punto máximo con mayor visibilidad
