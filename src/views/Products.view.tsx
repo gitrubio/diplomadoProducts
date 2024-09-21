@@ -1,4 +1,4 @@
-import { getProducts } from '@/api/products.api'
+import { getDiscount, getProducts } from '@/api/products.api'
 import Loader from '@/components/ui/Loader'
 import SearchInput from '@/components/ui/SearchInput'
 import { Product } from '@/types/products.type'
@@ -16,6 +16,14 @@ export default function Productsview() {
         return products
       }
       return filterProducts
+    }
+  
+    const productPrice = (price : number) => {
+      const discount = getDiscount()
+      if(discount.discount === 0) {
+        return price
+      }
+      return (price - (price * discount.discount / 100)).toFixed(2)
     }
   
     const fetchProducts = async () => {
@@ -76,8 +84,7 @@ export default function Productsview() {
               
               </div>
              <div>
-             <p className="text-sm font-medium text-gray-900 ">${product.price}</p>
-             <p className="text-sm font-medium text-gray-900 ">${product.price}</p>
+             <p className="text-sm font-medium text-gray-900 ">${productPrice(product.price)}</p>
              </div>
             </div>
           </div>

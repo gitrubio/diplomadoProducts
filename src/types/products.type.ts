@@ -8,6 +8,11 @@ export interface Product {
     rating:      Rating;
 }
 
+export interface IDiscount {
+    id: number;
+    discount: number;
+}
+
 export interface Rating {
     rate:  number;
     count: number;

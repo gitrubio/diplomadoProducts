@@ -42,11 +42,11 @@ export const BentoGridItem = ({
   color: string
   value: number;
   selected?: boolean;
-  setSelected: React.Dispatch<React.SetStateAction<number>>;
+  setSelected: (id: number, value: number)=>void;
 }) => {
   return (
     <div
-    onClick={() => setSelected(id)}
+    onClick={() => setSelected(id,value)}
       className={cn(
         `group relative cursor-pointer ${selected ? "shadow-xl" : ""}  row-span-1 rounded-xl  group/bento hover:shadow-xl  transition duration-200  dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent justify-between flex flex-col space-y-4`,
         className
@@ -56,12 +56,12 @@ export const BentoGridItem = ({
         <CheckCircleIcon className={`h-6 w-6 ${selected ? color : "hidden"}`} />
       </div>
       {header}
-      <div className={`${!selected ? 'group-hover/bento:translate-x-2' : '' } transition duration-200`}>
+      <div className={`${!selected ? 'group-hover/bento:translate-x-2 ' : color  } transition duration-200`}>
      
         <div className={`flex justify-start items-center ${selected ? color : "text-neutral-500"} group-hover:${color} `}>
         {icon} 
         </div>
-        <div className={`font-sans font-bold  ${selected ? color : ""} group-hover:${color} dark:text-neutral-200 mb-2 mt-2`}>
+        <div className={`font-sans font-bold  group-hover:${color} dark:text-neutral-200 mb-2 mt-2`}>
           {title}
         </div>
         <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
