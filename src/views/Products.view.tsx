@@ -1,12 +1,13 @@
 import { getDiscount, getProducts } from '@/api/products.api'
+import CardProduct from '@/components/CardProduct/CardProduct'
 import Loader from '@/components/ui/Loader'
 import SearchInput from '@/components/ui/SearchInput'
-import { Product } from '@/types/products.type'
-import { StarIcon } from '@heroicons/react/16/solid'
+import { IDiscount, Product } from '@/types/products.type'
 import React, { useEffect, useState } from 'react'
 
 export default function Productsview() {
     const [laoding,setLoading] = useState<boolean>(false)
+    const [discount,setDiscount] = useState<IDiscount>(getDiscount())
     const [products,setProducts] = useState<Product[]>([])
     const [filterProducts,setFilterProducts] = useState<Product[]>([])
     const [searchTerm, setSearchTerm] = useState('')
@@ -16,14 +17,6 @@ export default function Productsview() {
         return products
       }
       return filterProducts
-    }
-  
-    const productPrice = (price : number) => {
-      const discount = getDiscount()
-      if(discount.discount === 0) {
-        return price
-      }
-      return (price - (price * discount.discount / 100)).toFixed(2)
     }
   
     const fetchProducts = async () => {
@@ -44,7 +37,8 @@ export default function Productsview() {
       })
       setFilterProducts(productsFilter)
     }, [searchTerm])
-    const fixTitle = (title: string) => (title.length > 20 ? title.slice(0, 20) + '...' : title)
+
+
     if(laoding) {
       return (
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -62,32 +56,7 @@ export default function Productsview() {
     </div>
     <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         {productsToView().map((product) => (
-            <div className="group relative shadow-lg p-6 bg-white rounded-lg  ">
-            <div className="w-full h-[200px] transition-all  ease-in-out flex items-center justify-center  overflow-hidden rounded-md  lg:aspect-none group-hover:scale-110 lg:h-80">
-              <img src={product.image}/>
-            </div>
-            <div className="mt-4 flex justify-between">
-              <div>
-                <h3 className="text-sm text-gray-700">
-                  <a href="#">
-                    <span aria-hidden="true" className="absolute inset-0"></span>
-                    {fixTitle(product.title)}
-                  </a>
-                </h3>
-                <div className='flex justify-start items-center'>
-                <StarIcon className='size-4  transition-all duration-300 text-yellow-300  ' />
-                <p className="text-sm text-gray-950">{product.rating.rate}</p>
-               
-                <p className="text-sm text-gray-500  ml-1 ">({product.rating.count}</p>
-                <p className='text-sm text-gray-500 ml-2'>reviews)</p>
-                </div>
-              
-              </div>
-             <div>
-             <p className="text-sm font-medium text-gray-900 ">${productPrice(product.price)}</p>
-             </div>
-            </div>
-          </div>
+           <CardProduct key={product.id} product={product} discount={discount}/>
         ))}
     </div>
   </div>

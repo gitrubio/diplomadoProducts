@@ -72,6 +72,7 @@ const Skeleton = ({image} :{image: string}) => (
       value: 70, // percentage discount
       className: "md:col-span-2 border-t border-b border-gray-200",
     },
+    
   ];
   
 export default function Offerts() {
@@ -94,6 +95,11 @@ export default function Offerts() {
   return (
     <div className="bg-white mt-0">
     <div className="mx-auto max-w-2xl px-4 py-6  sm:px-6  lg:max-w-7xl lg:px-8">
+    <div className='flex w-full justify-center pb-5'>
+    <h2 className="text-2xl  tracking-tight text-gray-900 justify-centers">
+      Choose your discount coupon
+    </h2>
+    </div>
     <BentoGrid className="max-w-4xl mx-auto">
       {discountCoupons.map((item, i) => (
         <BentoGridItem

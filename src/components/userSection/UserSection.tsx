@@ -18,7 +18,7 @@ export default function UserSection() {
 
                 <NavLink
                     className='items-center text-sm font-medium   disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground  hover:bg-primary/90 h-9 px-4 py-2 hidden max-w-52 overflow-hidden whitespace-pre md:flex group relative w-full justify-center gap-2 rounded-md transition-all duration-300 ease-out hover:ring-2 hover:ring-primary hover:ring-offset-2'
-                    to='ofertas'
+                    to='offerts'
                 >
                     <span className='absolute right-0  -mt-12 h-32 w-8 translate-x-12 rotate-12 bg-white opacity-10 transition-all  ease-out animate-slide'></span>
 
