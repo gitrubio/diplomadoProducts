@@ -2,7 +2,7 @@ import MobileNav from '@/components/navBar/MobileNav'
 import NavBar from '@/components/navBar/NavBar'
 import Offerts from '@/views/Offerts.view'
 import Productsview from '@/views/Products.view'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 export default function Public() {
