@@ -3,11 +3,11 @@ import CardProduct from '@/components/CardProduct/CardProduct'
 import Loader from '@/components/ui/Loader'
 import SearchInput from '@/components/ui/SearchInput'
 import { IDiscount, Product } from '@/types/products.type'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Productsview() {
     const [laoding,setLoading] = useState<boolean>(false)
-    const [discount,setDiscount] = useState<IDiscount>(getDiscount())
+    const [discount] = useState<IDiscount>(getDiscount())
     const [products,setProducts] = useState<Product[]>([])
     const [filterProducts,setFilterProducts] = useState<Product[]>([])
     const [searchTerm, setSearchTerm] = useState('')

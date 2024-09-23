@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Meteors } from "./Meteores";
 import { CheckCircleIcon } from "@heroicons/react/16/solid";
  
 export const BentoGrid = ({

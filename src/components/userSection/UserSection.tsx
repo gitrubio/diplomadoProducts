@@ -1,7 +1,6 @@
 import { cn } from '@/lib/utils'
 import { StarIcon } from '@heroicons/react/16/solid'
 import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
-import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 export default function UserSection() {

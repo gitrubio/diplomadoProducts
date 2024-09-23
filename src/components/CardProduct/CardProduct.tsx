@@ -1,7 +1,5 @@
-import { getDiscount } from '@/api/products.api'
 import { IDiscount, Product } from '@/types/products.type'
 import { StarIcon } from '@heroicons/react/16/solid'
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function CardProduct({product,discount}: {product: Product, discount: IDiscount}) {

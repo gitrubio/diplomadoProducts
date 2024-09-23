@@ -1,5 +1,4 @@
 
-import { useState } from 'react'
 import {
     Routes,
     Route,
@@ -10,7 +9,6 @@ import Public from './Public.routes';
 
 export default function App() {
 
-    const [open, setOpen] = useState(false)
     const location = useLocation()
     console.log(location);
     

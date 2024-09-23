@@ -1,6 +1,5 @@
 import { localstorageDiscount } from "@/constants"
 import { IDiscount, Product } from "@/types/products.type"
-import { i } from "framer-motion/client";
 
 export const getProducts = async () : Promise<Product[]> => {
     try {
