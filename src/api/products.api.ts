@@ -12,6 +12,13 @@ export const getProducts = async () : Promise<Product[]> => {
     }
 }
 
+export const getProduct = async (id: string) : Promise<Product> => {
+        const response = await fetch(`https://fakestoreapi.com/products/${id}`)
+        const data = await response.json()
+        return data as Product
+    
+}
+
 export const setDiscount = (discount : IDiscount ) => {
     localStorage.setItem(localstorageDiscount, JSON.stringify(discount))
 }

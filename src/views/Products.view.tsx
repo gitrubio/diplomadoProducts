@@ -1,6 +1,7 @@
 import { getDiscount, getProducts } from '@/api/products.api'
 import CardProduct from '@/components/CardProduct/CardProduct'
 import Loader from '@/components/ui/Loader'
+import ProductNotFound from '@/components/ui/ProductNotFound'
 import SearchInput from '@/components/ui/SearchInput'
 import { IDiscount, Product } from '@/types/products.type'
 import { useEffect, useState } from 'react'
@@ -59,6 +60,10 @@ export default function Productsview() {
            <CardProduct key={product.id} product={product} discount={discount}/>
         ))}
     </div>
+    {
+      productsToView().length === 0 && 
+        <ProductNotFound/>
+    }
   </div>
 </div>
   )

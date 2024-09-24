@@ -29,11 +29,11 @@ export default function NavBar({setOpen,navigation}: NavProps) {
                 </button>
 
                 {/* Logo */}
-                <div className='ml-4 flex lg:ml-0'>
-                    <a href='#'>
+                <div className='ml-4 flex lg:ml-0 w-10'>
+                   
                         <span className='sr-only'>Your Company</span>
                         <img alt='' src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600' className='h-8 w-auto' />
-                    </a>
+                    
                 </div>
 
                 {/* Flyout menus */}

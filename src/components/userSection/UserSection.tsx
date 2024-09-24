@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import { StarIcon } from '@heroicons/react/16/solid'
-import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { ShoppingBagIcon } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 
 export default function UserSection() {
@@ -51,8 +52,15 @@ export default function UserSection() {
             />
             <span className='ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800'>0</span>
             <span className='sr-only'>items in cart, view bag</span>
-        </a>
+            
+        </a> 
     </div>
+    <a href='#' className='group -m-2 flex items-center p-2 ml-4'>
+            <UserCircleIcon
+                aria-hidden='true'
+                className='h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
+            />
+            </a>
 </div>
   )
 }

@@ -1,6 +1,7 @@
 import MobileNav from '@/components/navBar/MobileNav'
 import NavBar from '@/components/navBar/NavBar'
 import Offerts from '@/views/Offerts.view'
+import ProductOverView from '@/views/ProductOver.view'
 import Productsview from '@/views/Products.view'
 import { useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
@@ -39,7 +40,7 @@ export default function Public() {
             <Routes>
                 <Route path='' element={<Navigate to={"/store"} />} />
                 <Route path='/store' element={<Productsview />} />
-                <Route path='/store/:productID' element={<>dadad</>} />
+                <Route path='/store/:productID' element={<ProductOverView/>} />
                 <Route path='/nosotros' element={'hello'} />
                 <Route path='/contacto' element={'hello'} />
                 <Route path='/offerts' element={<Offerts />} />
