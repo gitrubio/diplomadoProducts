@@ -1,7 +1,6 @@
 import { IDiscount, Product } from '@/types/products.type'
 import { StarIcon } from '@heroicons/react/16/solid'
 import { Link } from 'react-router-dom'
-import AddToCartButton from '../ui/AddToCardButton'
 import { productPrice } from '@/lib/utils'
 
 export default function CardProduct({product,discount}: {product: Product, discount: IDiscount}) {

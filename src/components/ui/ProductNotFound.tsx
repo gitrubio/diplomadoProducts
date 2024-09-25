@@ -1,5 +1,4 @@
-import { Button } from "@headlessui/react";
-import { PackageX, RefreshCw } from "lucide-react";
+import { PackageX } from "lucide-react";
 
 
 export default function ProductNotFound() {

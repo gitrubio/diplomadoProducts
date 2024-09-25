@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
-import { IDiscount, Product } from '@/types/products.type'
+import { IDiscount } from '@/types/products.type'
 import { useParams } from 'react-router-dom'
 import { useGetProduct } from '@/hooks/useGetProduct'
 import { productPrice } from '@/lib/utils'
@@ -67,7 +67,7 @@ function classNames(...classes : any) {
 export default function ProductOverView() {
     
     const { productID } = useParams()
-    const {product, loading}  =  useGetProduct(productID)
+    const {product}  =  useGetProduct(productID)
     const [discount] = useState<IDiscount>(getDiscount())
   
     const [selectedColor, setSelectedColor] = useState( { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },)
