@@ -1,10 +1,14 @@
 import { cn } from '@/lib/utils'
+import useUserSession from '@/store/store'
 import { StarIcon } from '@heroicons/react/16/solid'
-import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { UserCircleIcon } from '@heroicons/react/24/outline'
 import { ShoppingBagIcon } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
+import UserProfile from '../ui/userProfile'
 
 export default function UserSection() {
+     const { isLoggedIn, username, userEmail } = useUserSession()
+
   return (
     <div className='ml-auto flex items-center'>
 
@@ -26,7 +30,7 @@ export default function UserSection() {
 
 
                     <div className='flex items-center'>
-                        <span className='ml-1'>Ofertas Especiales</span>
+                        <span className='ml-1'>Special Offers</span>
                     </div>
 
                 </NavLink>
@@ -35,13 +39,7 @@ export default function UserSection() {
         <span aria-hidden='true' className='h-6 w-px bg-gray-200' />
     </div>
 
-    {/* Search */}
-    <div className='flex lg:ml-6'>
-        <a href='#' className='p-2 text-gray-400 hover:text-gray-500'>
-            <span className='sr-only'>Search</span>
-            <MagnifyingGlassIcon aria-hidden='true' className='h-6 w-6' />
-        </a>
-    </div>
+    
 
     {/* Cart */}
     <div className='ml-4 flow-root lg:ml-6'>
@@ -55,12 +53,14 @@ export default function UserSection() {
             
         </a> 
     </div>
-    <a href='#' className='group -m-2 flex items-center p-2 ml-4'>
+   { isLoggedIn ? <>
+      <UserProfile userEmail={userEmail} username={username}/>
+   </> : <NavLink to={"/login"} className='group -m-2 flex items-center p-2 ml-4'>
             <UserCircleIcon
                 aria-hidden='true'
                 className='h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
             />
-            </a>
+            </NavLink>}
 </div>
   )
 }

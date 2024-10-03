@@ -1,9 +1,9 @@
 import { PopoverGroup } from '@headlessui/react'
 import { Bars3Icon } from '@heroicons/react/24/outline'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import UserSection from '../userSection/UserSection'
 import { Categoires } from '@/types/nav.types'
-
+import logo from "@/assets/images/ecommerce-logo.webp"
     interface NavProps {
         setOpen: (value: boolean) => void
         navigation: {
@@ -12,6 +12,8 @@ import { Categoires } from '@/types/nav.types'
     }
 
 export default function NavBar({setOpen,navigation}: NavProps) {
+    
+    const location = useLocation();
 
   return (
     <header className='relative bg-white'>
@@ -29,19 +31,19 @@ export default function NavBar({setOpen,navigation}: NavProps) {
                 </button>
 
                 {/* Logo */}
-                <div className='ml-4 flex lg:ml-0 w-10'>
+                <NavLink to={"home"} className='ml-4 flex lg:ml-0 w-10'>
                    
                         <span className='sr-only'>Your Company</span>
-                        <img alt='' src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600' className='h-8 w-auto' />
+                        <img alt='' src={logo} className='h-8 w-auto' />
                     
-                </div>
+                </NavLink>
 
                 {/* Flyout menus */}
 
                 <PopoverGroup className='hidden lg:ml-8 lg:block lg:self-stretch'>
                     <div className='flex h-full space-x-8'>
                         {navigation.categories.map((category) => (
-                            <NavLink to={category.id} className={`relative z-10 -mb-px flex   items-center border-b-2  pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 ${location.pathname.includes(category.id) ? "border-indigo-600 text-indigo-600" : ""}`}>
+                            <NavLink key={category.id} to={category.id} className={`relative z-10 -mb-px flex   items-center border-b-2  pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 ${location.pathname.includes(category.id) ? "border-indigo-600 text-indigo-600" : ""}`}>
                                 {category.name}
                             </NavLink>
                         ))}

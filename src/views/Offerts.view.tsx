@@ -40,7 +40,7 @@ const Skeleton = ({image} :{image: string}) => (
     {
         id: 3,
       title: "30% Off Design Services",
-      description: "Save 30% on design and aesthetic services.",
+      description: "Enjoy a 30% discount on all digital technology products.",
       header: <Skeleton image={cupongimage30}/>,
       color: "text-blue-500",
       icon: <GiftIcon className="h-4 w-4 " />,

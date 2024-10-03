@@ -5,7 +5,9 @@ import AppRoutes from './routes'
 import {
   BrowserRouter as Router
 } from "react-router-dom";
-import 'animate.css'; 
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import './index.css'
 
 createRoot(document.getElementById('root')!).render(
