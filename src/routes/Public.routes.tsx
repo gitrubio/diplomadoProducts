@@ -1,3 +1,4 @@
+import Cart from '@/components/Cart/Cart'
 import MobileNav from '@/components/navBar/MobileNav'
 import NavBar from '@/components/navBar/NavBar'
 import AuthGuard from '@/guards/AuthGuard'
@@ -44,6 +45,7 @@ export default function Public() {
                 <Route path='/home'  element={<Home/>} />
                 <Route path='/store' element={<Productsview />} />
                 <Route path='/store/:productID' element={<ProductOverView/>} />
+                <Route path='/cart' element={<Cart/>} />
                 <Route path='/contacto' element={'hello'} />
                 <Route path='/offerts' element={<Offerts />} />
                 <Route element={<AuthGuard redirectTo='/login' />}>

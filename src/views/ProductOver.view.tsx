@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom'
 import { useGetProduct } from '@/hooks/useGetProduct'
 import { productPrice } from '@/lib/utils'
 import { getDiscount } from '@/api/products.api'
+import useProductsCart from '@/store/products'
+import useAlertStore from '@/store/alerts'
 
 const productDefaultOptions = {
   name: 'Basic Tee 6-Pack',
@@ -70,10 +72,30 @@ export default function ProductOverView() {
     const {product}  =  useGetProduct(productID)
     const [discount] = useState<IDiscount>(getDiscount())
   
-    const [selectedColor, setSelectedColor] = useState( { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },)
-    const [selectedSize, setSelectedSize] = useState( { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },)
+    const [selectedColor, setSelectedColor] = useState<any>(null)
+    const [selectedSize, setSelectedSize] = useState<any>(null)
+    const {addProduct} = useProductsCart()
+    const { addAlert } = useAlertStore();
 
-    console.log(product)
+    const handleAddProduct = (e : React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+
+     if (selectedColor?.class && selectedSize?.name ) {
+      addProduct({
+        id: product.id,
+        title: product.title,
+        quantity: 1,
+        price: product.price,
+        image: product.image,
+        color: selectedColor.class,
+        size: selectedSize.name
+      })
+      addAlert("product added to cart", "success")
+     }else{
+      addAlert("Please select a color and size", "error")
+     }
+    
+    }
   return (
     <div className="bg-white">
       <div className="pt-6">
@@ -101,7 +123,6 @@ export default function ProductOverView() {
             </li>
           </ol>
         </nav>
-
         {/* Product info */}
         <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
         
@@ -143,7 +164,7 @@ export default function ProductOverView() {
               </div>
             </div>
 
-            <form className="mt-10">
+            <form className="mt-10" onSubmit={handleAddProduct}>
               {/* Colors */}
               <div>
                 <h3 className="text-sm font-medium text-gray-900">Color</h3>

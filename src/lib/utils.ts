@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const productPrice = (price : number,discount: IDiscount) => {
   if(discount.discount === 0) {
-    return price
+    return price + ''
   }
   return (price - (price * discount.discount / 100)).toFixed(2)
 }
