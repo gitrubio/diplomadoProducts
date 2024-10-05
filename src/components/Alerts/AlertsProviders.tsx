@@ -1,5 +1,4 @@
 import React from 'react';
-import { Transition } from '@headlessui/react'; // Para animaciones opcionales
 import useAlertStore from '@/store/alerts';
 import { FaExclamationCircle, FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
 

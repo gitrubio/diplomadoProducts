@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getStorage} from 'firebase/storage';
 // Configuración obtenida desde tu proyecto en Firebase Console
 const firebaseConfig = {
     apiKey: "AIzaSyDzRWrq425p6MRqZSXguF8fgrtec1_CpPY",

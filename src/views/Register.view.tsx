@@ -5,16 +5,10 @@ import logo from "@/assets/images/ecommerce-logo.webp"
 import useAuht from '@/hooks/useAuth'
 
 
-interface FormData {
-    name?: string
-    email?: string
-    password?: string
-    confirmPassword?: string
-}
 
 
 export default function Register() {
-   const [error, setError] = React.useState<string | null>(null)
+   const [_error, setError] = React.useState<string | null>(null)
    const { register } = useAuht()
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
