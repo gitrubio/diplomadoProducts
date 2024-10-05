@@ -9,10 +9,12 @@ import Login from "@/views/Login.view";
 import Register from "@/views/Register.view";
 import useUserSession from "@/store/store";
 import AlertProvider from "@/components/Alerts/AlertsProviders";
+import Dashboard from "./Dashboard";
+import AdminGuard from "@/guards/AdminGuard";
 
 
 export default function App() {
-    const { isLoggedIn } = useUserSession()
+    const { isLoggedIn, admin } = useUserSession()
     return (
         <div>
             <AlertProvider/>
@@ -20,7 +22,7 @@ export default function App() {
             <Route  path='/*' element={<Public/>}/>
             <Route  path='/login' element={isLoggedIn ?  <Navigate to={"/"}/> :<Login/>}/>
             <Route  path='/register' element={isLoggedIn ?  <Navigate to={"/"}/> :<Register/>}/>
-            <Route  path='/dashboard' element={<>login</>}/>
+            <Route  path='/dashboard/*' element={(isLoggedIn && admin) ? <Dashboard/> : <Navigate to={"/"}/>}/>
             </Routes>
         </div>
     );

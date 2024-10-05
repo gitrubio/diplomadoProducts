@@ -12,9 +12,8 @@ import 'animate.css';
 import './index.css'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  
     <Router>
     <AppRoutes/>
     </Router>
-  </StrictMode>,
 )

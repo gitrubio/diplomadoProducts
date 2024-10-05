@@ -6,8 +6,8 @@ interface UserSession {
   username: string;
   userEmail: string;
   isLoggedIn: boolean;
-  isAdmin: boolean;
-  login: (userId: string, username: string, userEmail: string , isAdmin: boolean) => void;
+  admin: boolean;
+  login: (userId: string, username: string, userEmail: string , admin: boolean) => void;
   logout: () => void;
 }
 
@@ -18,10 +18,10 @@ const useUserSession = create<UserSession>()(
       username: '',
       userEmail: '',
       isLoggedIn: false,
-      isAdmin: false,
-      login: (userId: string, username: string, userEmail: string , isAdmin: boolean) =>
-        set({ userId, username, userEmail, isLoggedIn: true, isAdmin}),
-      logout: () => set({ userId: '', username: '',userEmail: '',  isLoggedIn: false, isAdmin: false}),
+      admin: false,
+      login: (userId: string, username: string, userEmail: string , admin: boolean) =>
+        set({ userId, username, userEmail, isLoggedIn: true, admin}),
+      logout: () => set({ userId: '', username: '',userEmail: '',  isLoggedIn: false, admin: false}),
     }),
     {
       name: 'user-session', // nombre del storage

@@ -22,10 +22,10 @@ const AlertProvider: React.FC = () => {
     }
   }
   return (
-    <div className="fixed bottom-5 right-5 space-y-3 z-50">
+    <div className="fixed bottom-5 left-5 space-y-3 z-50">
       {alerts.map((alert) => (
           <div
-            className={`animate__animated  animate__slideInRight animate__faster p-4 rounded-lg shadow-md text-white ${
+            className={`animate__animated  animate__slideInLeft animate__faster p-4 rounded-lg shadow-md text-white ${
               alert.type === 'success'
                 ? 'bg-green-500'
                 : alert.type === 'error'

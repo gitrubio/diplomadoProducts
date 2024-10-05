@@ -1,5 +1,6 @@
 import { getDiscount } from "@/api/products.api"
 import { productPrice } from "@/lib/utils"
+import useAlertStore from "@/store/alerts"
 import useProductsCart from "@/store/products"
 import { IDiscount } from "@/types/products.type"
 import { Radio, RadioGroup } from "@headlessui/react"
@@ -12,22 +13,62 @@ export default function Cart() {
  
   const navigate = useNavigate()
   const [discount] = useState<IDiscount>(getDiscount())
+  const {addAlert} = useAlertStore()
   const {products, addProduct, updateProducts, removeProduct} = useProductsCart()
 
   function classNames(...classes : any) {
     return classes.filter(Boolean).join(' ')
   }
-  const removeAllProduct = (id: number) => {
+  const removeAllProduct = (id: string) => {
     const newProducts = products.filter((product) => product.id !== id)
     updateProducts(newProducts)
   }
   const total = products.reduce((acc, product) => acc + (+productPrice(product.price,discount))*product.quantity, 0)
 
   return (
-    <div className="font-sans">
+  <div className="font-sans lg:max-w-7xl m-auto">
       <div className="grid lg:grid-cols-3 gap-10 p-4">
         <div className="lg:col-span-2 bg-white divide-y">
-          <h2 className="text-lg font-bold text-gray-800 py-4">Shopping Cart</h2>
+        <div className="lg:col-span-2 max-lg:order-1">
+
+<div className="flex items-start">
+  <div className="w-full pb-5">
+    <div className="flex items-center w-full">
+      <div className="w-8 h-8 shrink-0 mx-[-1px] bg-gray-800 p-1.5 flex items-center justify-center rounded-full">
+        <span className="text-sm text-white font-bold">1</span>
+      </div>
+      <div className="w-full h-[3px] mx-4 rounded-lg bg-gray-300"></div>
+    </div>
+    <div className="mt-2 mr-4">
+      <h6 className="text-sm font-bold text-gray-800">Shipping</h6>
+    </div>
+  </div>
+
+  <div className="w-full">
+    <div className="flex items-center w-full">
+      <div className="w-8 h-8 shrink-0 mx-[-1px] bg-gray-200 p-1.5 flex items-center justify-center rounded-full">
+        <span className="text-sm text-white font-bold">2</span>
+      </div>
+      <div className="w-full h-[3px] mx-4 rounded-lg bg-gray-300"></div>
+    </div>
+    <div className="mt-2 mr-4">
+      <h6 className="text-sm font-bold text-gray-300">Billing</h6>
+    </div>
+  </div>
+
+  <div>
+    <div className="flex items-center">
+      <div className="w-8 h-8 shrink-0 mx-[-1px] bg-gray-200 p-1.5 flex items-center justify-center rounded-full">
+        <span className="text-sm text-white font-bold">3</span>
+      </div>
+    </div>
+    <div className="mt-2">
+      <h6 className="text-sm font-bold text-gray-300">Confirm</h6>
+    </div>
+  </div>
+</div>
+
+</div>
          {products.length === 0 && <h3 className="text-lg font-bold text-gray-800 py-4">No products in the cart</h3>}
          {products.map((product,index) => (
            <div className="flex items-start max-sm:flex-col gap-4 py-4">
@@ -109,7 +150,13 @@ export default function Cart() {
             <li className="flex flex-wrap gap-4 text-sm py-3 font-bold">Total <span className="ml-auto">${(total + 5.00 + 4.00).toFixed(2)}</span></li>
           </ul>
 
-          <button type="button" onClick={()=> navigate("/checkout")} className="mt-4 text-sm px-5 py-2.5 w-full bg-blue-600 hover:bg-blue-700 text-white rounded-md">Make Payment</button>
+          <button type="button" onClick={()=> {
+            if(products.length === 0){
+              addAlert('No products in the cart','info')
+            }else{
+              navigate("/checkout")
+            }
+          }} className="mt-4 text-sm px-5 py-2.5 w-full bg-blue-600 hover:bg-blue-700 text-white rounded-md">Make Payment</button>
 
           <div className="mt-8">
             <h3 className="text-lg font-bold text-gray-800 mb-4">Apply promo code</h3>

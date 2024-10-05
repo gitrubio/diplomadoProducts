@@ -1,12 +1,12 @@
-import { Product } from '@/types/products.type';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-interface ProductCartInfo {
-    id: number;
+export interface ProductCartInfo {
+    id: string;
     quantity: number;
     title: string;
     price: number;
     image: string;
+    category: string;
     color: string;
     size?: string;
 }

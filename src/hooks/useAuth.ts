@@ -35,7 +35,7 @@ const useAuht = () => {
         const userData : any = await getUserById(user.uid)
         console.log(userData);
         
-        login(user.uid, userData.username, email, userData.isAdmin ?? false) 
+        login(user.uid, userData.username, email, userData.admin ?? false) 
         addAlert(`Welcome back, ${userData.username}!`, 'success')
         } else {
             addAlert('Invalid email or password', 'error')

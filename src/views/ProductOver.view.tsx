@@ -9,56 +9,9 @@ import { productPrice } from '@/lib/utils'
 import { getDiscount } from '@/api/products.api'
 import useProductsCart from '@/store/products'
 import useAlertStore from '@/store/alerts'
+import { FaImage } from 'react-icons/fa'
 
-const productDefaultOptions = {
-  name: 'Basic Tee 6-Pack',
-  price: '$192',
-  href: '#',
-  breadcrumbs: "shirts",
-  images: [
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-      alt: 'Two each of gray, white, and black shirts laying flat.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-      alt: 'Model wearing plain black basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-      alt: 'Model wearing plain gray basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-      alt: 'Model wearing plain white basic tee.',
-    },
-  ],
-  colors: [
-    { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
-    { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
-    { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900' },
-  ],
-  sizes: [
-    { name: 'XXS', inStock: false },
-    { name: 'XS', inStock: true },
-    { name: 'S', inStock: true },
-    { name: 'M', inStock: true },
-    { name: 'L', inStock: true },
-    { name: 'XL', inStock: true },
-    { name: '2XL', inStock: true },
-    { name: '3XL', inStock: true },
-  ],
-  description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
-  highlights: [
-    'Hand cut and sewn locally',
-    'Dyed with our proprietary colors',
-    'Pre-washed & pre-shrunk',
-    'Ultra-soft 100% cotton',
-  ],
-  details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
-}
+
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
 function classNames(...classes : any) {
@@ -86,6 +39,7 @@ export default function ProductOverView() {
         title: product.title,
         quantity: 1,
         price: product.price,
+        category: product.category,
         image: product.image,
         color: selectedColor.class,
         size: selectedSize.name
@@ -128,6 +82,7 @@ export default function ProductOverView() {
         
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8 flex flex-col items-center">
             <div className="w-[300px] h-[500px]   overflow-hidden rounded-lg lg:block">
+            {!product.image && <FaImage /> }
             <img
               src={product.image}
               className="object-cover object-center"
@@ -139,7 +94,7 @@ export default function ProductOverView() {
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             {discount.discount !== 0 && <p className="text-sm text-gray-500 line-through">${product.price}</p>}
-            <p className="text-3xl tracking-tight text-gray-900">{productPrice(product.price,discount)}</p>
+            <p className="text-3xl tracking-tight text-gray-900">${productPrice(product.price,discount)}</p>
 
             {/* Reviews */}
             <div className="mt-6">
@@ -171,13 +126,12 @@ export default function ProductOverView() {
 
                 <fieldset aria-label="Choose a color" className="mt-4">
                  <RadioGroup value={selectedColor} onChange={setSelectedColor} className="flex items-center space-x-3">
-                    {productDefaultOptions.colors.map((color) => (
+                    {product.colors.map((color) => (
                       <Radio
                         key={color.name}
                         value={color}
                         aria-label={color.name}
                         className={classNames(
-                          color.selectedClass,
                           'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1',
                         )}
                       >
@@ -208,7 +162,7 @@ export default function ProductOverView() {
                     value={selectedSize}
                     onChange={setSelectedSize}
                     className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
-                  >   {productDefaultOptions.sizes.map((size) => (
+                  >   {product.sizes.map((size) => (
                       <Radio
                         key={size.name}
                         value={size}

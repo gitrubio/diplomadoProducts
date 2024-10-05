@@ -2,8 +2,12 @@ import Cart from '@/components/Cart/Cart'
 import MobileNav from '@/components/navBar/MobileNav'
 import NavBar from '@/components/navBar/NavBar'
 import AuthGuard from '@/guards/AuthGuard'
+import Checkout from '@/views/Checkout.view'
+import History from '@/views/History.view'
 import Home from '@/views/Home.view'
+import Invoice from '@/views/Invoice.view'
 import Offerts from '@/views/Offerts.view'
+import OrderTracker from '@/views/OrderTracker.view'
 import ProductOverView from '@/views/ProductOver.view'
 import Productsview from '@/views/Products.view'
 import { useState } from 'react'
@@ -24,11 +28,6 @@ export default function Public() {
                 name: 'Store',
     
             },
-            {
-                id: 'contacto',
-                name: 'Contact',
-    
-            },
         ],
     }
     
@@ -46,11 +45,12 @@ export default function Public() {
                 <Route path='/store' element={<Productsview />} />
                 <Route path='/store/:productID' element={<ProductOverView/>} />
                 <Route path='/cart' element={<Cart/>} />
-                <Route path='/contacto' element={'hello'} />
                 <Route path='/offerts' element={<Offerts />} />
                 <Route element={<AuthGuard redirectTo='/login' />}>
-                    <Route path='/history' element={'historial'} />
-                    <Route path='/checkout' element={'checkout'} />
+                    <Route path='/history' element={<History/>} />
+                    <Route path='/checkout' element={<Checkout/>} />
+                    <Route path='/invoice/:id' element={<Invoice/>} />
+                    <Route path='/order/:id' element={<OrderTracker/>} />
                 </Route>
                 <Route path='/*' element={'NotFount'} />
             </Routes>
