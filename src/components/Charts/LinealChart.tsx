@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 const chartConfig = {
     series: [
@@ -90,9 +91,11 @@ const chartConfig = {
 interface classNameProps {
     className?: string
     id: string
+    data: []
 }
 export default function LinealChart({className,id}: classNameProps) {
     const init = () => {
+        
         // @ts-ignore
         const chart = new ApexCharts(document.querySelector("#"+id), chartConfig);
         chart.render();
@@ -124,11 +127,10 @@ export default function LinealChart({className,id}: classNameProps) {
     </div>
     <div>
       <h6 className="block font-sans text-base font-semibold leading-relaxed tracking-normal text-blue-gray-900 antialiased">
-        Line Chart
+        Sells
       </h6>
       <p className="block max-w-sm font-sans text-sm font-normal leading-normal text-gray-700 antialiased">
-        Visualize your data in a simple way using the
-        @material-tailwind/html chart plugin.
+        number of sells by moth
       </p>
     </div>
   </div>
