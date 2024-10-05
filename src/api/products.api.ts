@@ -22,7 +22,7 @@ export const getProducts = async (): Promise<Product[]> => {
     }
   };
 
-  export async function deleteProduct(productId: string): Promise<void> {
+  export const deleteProduct = async (productId: string): Promise<void> {
     const productRef = doc(db, 'products', productId); // Asegúrate de que 'products' es el nombre correcto de tu colección
   
     try {
@@ -54,7 +54,7 @@ export const getProduct = async (productId: string,): Promise<Product | null> =>
     }
   };
 
- export async function updateProduct(productId: string, updatedData: Record<string, any>): Promise<void> {
+ export const updateProduct = async (productId: string, updatedData: Record<string, any>): Promise<void> {
     const productRef = doc(db, 'products', productId); // 'products' es el nombre de tu colección
   
     try {
