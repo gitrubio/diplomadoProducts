@@ -15,19 +15,19 @@ export default function MobileNav({open,setOpen,navigation} : MobileNavProps) {
     <Dialog open={open} onClose={setOpen} className='relative z-40 lg:hidden'>
     <DialogBackdrop
         transition
-        className='fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0'
+        className='fixed inset-0 bg-[#131921] bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0'
     />
 
-    <div className='fixed inset-0 z-40 flex'>
+    <div className='fixed inset-0 z-40 flex text-white'>
         <DialogPanel
             transition
-            className='relative flex w-full max-w-xs transform flex-col overflow-y-auto bg-white pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:-translate-x-full'
+            className='relative flex w-full max-w-xs transform flex-col overflow-y-auto bg-[#131921] pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:-translate-x-full'
         >
             <div className='flex px-4 pb-2 pt-5'>
                 <button
                     type='button'
                     onClick={() => setOpen(false)}
-                    className='relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400'
+                    className='relative -m-2 inline-flex items-center justify-center rounded-md p-2 '
                 >
                     <span className='absolute -inset-0.5' />
                     <span className='sr-only'>Close menu</span>
@@ -37,12 +37,12 @@ export default function MobileNav({open,setOpen,navigation} : MobileNavProps) {
 
             {/* Links */}
             <TabGroup className='mt-2'>
-                <div className='border-b border-gray-200'>
+                <div className='border-b border-white'>
                     <TabList className='-mb-px flex flex-col   '>
                         {navigation.categories.map((category) => (
                             <Tab
                                 key={category.name}
-                                className='flex-1 border-b-2 border-transparent  py-4 text-base font-medium text-gray-900 data-[selected]:border-indigo-600 data-[selected]:text-indigo-600'
+                                className='flex-1 border-b-2 border-white  py-4 text-base font-medium'
                             >
                                 {category.name}
                             </Tab>

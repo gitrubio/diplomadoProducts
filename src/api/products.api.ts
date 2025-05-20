@@ -4,7 +4,7 @@ import { IDiscount, Product } from "@/types/products.type"
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, Timestamp, updateDoc } from "firebase/firestore"
 
 
-export const getProducts = async (): Promise<Product[]> => {
+export const getProducts = async ( filter: string | null): Promise<Product[]> => {
     try {
       const productCollectionRef = collection(db, 'products');
       const querySnapshot = await getDocs(productCollectionRef);
@@ -14,7 +14,9 @@ export const getProducts = async (): Promise<Product[]> => {
           ...doc.data(),
         } as any;
       });
-  
+      if(filter){
+        return products.filter((product) => product.category === filter || product.title?.toLowerCase().includes(filter.toLowerCase()) || product.description?.toLowerCase().includes(filter.toLowerCase()))
+      }
       return products;
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -22,7 +24,7 @@ export const getProducts = async (): Promise<Product[]> => {
     }
   };
 
-  export const deleteProduct = async (productId: string): Promise<void> {
+  export const deleteProduct = async (productId: string): Promise<void> =>{
     const productRef = doc(db, 'products', productId); // Asegúrate de que 'products' es el nombre correcto de tu colección
   
     try {
@@ -54,7 +56,7 @@ export const getProduct = async (productId: string,): Promise<Product | null> =>
     }
   };
 
- export const updateProduct = async (productId: string, updatedData: Record<string, any>): Promise<void> {
+ export const updateProduct = async (productId: string, updatedData: Record<string, any>): Promise<void> => {
     const productRef = doc(db, 'products', productId); // 'products' es el nombre de tu colección
   
     try {

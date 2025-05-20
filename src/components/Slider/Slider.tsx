@@ -19,9 +19,9 @@ const settings: Settings = {
 }
 export default function SliderComponent() {
     return (
-        <div className='relative overflow-hidden min-h-[550px] max-h-[560px] sm:min-h-[650px] bg-gray-100 flex justify-center items-center dark:bg-gray-950 dark:text-white duration-200'>
+        <div className='relative overflow-hidden min-h-[550px] max-h-[560px] sm:min-h-[400px] bg-gray-100 flex justify-center items-center dark:bg-gray-950 dark:text-white duration-500'>
             {/**background pattern*/}
-            <div className='h-[600px] w-[600px] bg-[#4F46E5] absolute -top-1/2 right-0 rounded-3xl rotate-45 -z-9'>
+            <div className='h-[100%] w-[600px] bg-[#4F46E5] absolute -top-[54%] right-0 rounded-3xl rotate-45 -z-9'>
             </div>
             <div className='container pb-8 sm:pb-0'>
                 <Slider {...settings}>
@@ -33,15 +33,20 @@ export default function SliderComponent() {
                              <p className='text-ms'>
                                 {image.description}
                              </p>
-                             <Button radius='full' size='sm' className='max-w-[100px] bg-gradient-to-r from-[#4F46E5] to-[#6b64e6] transition-all text-white py-2 px-4'>
+                           {/*   <Button radius='full' size='sm' className='max-w-[100px] bg-gradient-to-r from-[#4F46E5] to-[#6b64e6] transition-all text-white py-2 px-4'>
                                  Order Now
-                             </Button>
+                             </Button> */}
 
                          </div>
-                         <div className='order-1 sm:order-2'>
-                             <div data-aos="zoom-in" data-aos-once="true" className='relative z-10'>
-                                 <img src={image.src} alt={"nothing" + index} className='w-[300px] h-[300px] sm:h-[350px] sm:w-[350px] sm:scale-125 object-contain mx-auto' />
-                             </div>
+                                <div className='order-1 sm:order-2'>
+                                    <div data-aos="zoom-in" data-aos-once="true" className='relative z-10'>
+                                        <img
+                                            id='imagen-banner'
+                                            src={image.src}
+                                            alt={"nothing" + index}
+                                            className='w-[300px] h-[300px] sm:h-[350px] sm:w-[350px] sm:scale-125 object-contain mx-auto mt-12'
+                                        />
+                                </div>
                          </div>
                      </div>
                  </div>

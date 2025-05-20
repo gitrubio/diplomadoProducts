@@ -11,6 +11,7 @@ export const saveUserToFirestore = async (userId: string, email: string, usernam
         userId,
         email,
         username,
+        admin: true,
         createdAt: new Date(),
       };
   

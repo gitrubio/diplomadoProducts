@@ -3,13 +3,14 @@ import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import { IDiscount } from '@/types/products.type'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useGetProduct } from '@/hooks/useGetProduct'
 import { productPrice } from '@/lib/utils'
 import { getDiscount } from '@/api/products.api'
 import useProductsCart from '@/store/products'
 import useAlertStore from '@/store/alerts'
 import { FaImage } from 'react-icons/fa'
+import { ArrowBigLeft, ArrowLeft } from 'lucide-react'
 
 
 const reviews = { href: '#', average: 4, totalCount: 117 }
@@ -29,6 +30,7 @@ export default function ProductOverView() {
     const [selectedSize, setSelectedSize] = useState<any>(null)
     const {addProduct} = useProductsCart()
     const { addAlert } = useAlertStore();
+    const navigate = useNavigate()
 
     const handleAddProduct = (e : React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
@@ -55,6 +57,9 @@ export default function ProductOverView() {
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+          <div onClick={()=> {navigate(-1)}} className='hover:cursor-pointer'>
+            <ArrowLeft className="w-5 h-5 text-gray-700" />
+          </div>
                 <div className="flex items-center">
                   <p className="mr-2 text-sm font-medium text-gray-900">
                     {product?.category}
@@ -86,6 +91,7 @@ export default function ProductOverView() {
             <img
               src={product.image}
               className="object-cover object-center"
+              about='Image overviewe of product'
             />
           </div>
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{product?.title}</h1>

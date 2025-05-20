@@ -1,4 +1,4 @@
-import useAuht from "@/hooks/useAuth"
+import useAuth from "@/hooks/useAuth"
 import useUserSession from "@/store/store"
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { ClockIcon, ComputerDesktopIcon } from "@heroicons/react/16/solid"
@@ -12,14 +12,14 @@ interface UserProfileProps {
 }
 export default function UserProfile({ username, userEmail }: UserProfileProps) {
     const {admin} = useUserSession()
-    const {Logout} = useAuht()
+    const {Logout} = useAuth()
 
     return (
         <Menu as="div" className="relative inline-block text-left">
             <MenuButton className="">
                 <div className=" hidden sm:flex items-center gap-4 pl-5">
-                    <div className=" relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                        <span className="font-medium text-gray-600 dark:text-gray-300 text-primary-400 ">{username.charAt(0) + username.charAt(1)}</span>
+                    <div className=" relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-700 rounded-full dark:bg-gray-600">
+                        <span className="font-medium  dark:text-gray-300 text-primary-400 ">{username.charAt(0).toUpperCase() + username.charAt(1).toUpperCase() }</span>
                     </div>
                     <div className="flex flex-col items-start font-medium dark:text-white">
                         <div>{username}</div>
@@ -69,7 +69,7 @@ export default function UserProfile({ username, userEmail }: UserProfileProps) {
                             <button
                             onClick={Logout}
                                 type="submit"
-                                className=" text-red-500 flex items-center block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 "
+                                className="  items-center block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 "
                             >
                                 <FaSignOutAlt className="inline-block mr-2" />
                                 Sign out

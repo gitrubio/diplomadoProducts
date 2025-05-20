@@ -7,6 +7,7 @@ interface ProductPros {
   title: string;
   description: string;
   img: string;
+  customClass?: string;
 
 }
 
@@ -14,13 +15,13 @@ export function ThreeDCardDemo({ Product, handleOrder }: { Product: ProductPros,
   return (
     <CardContainer className="inter-var rounded-2xl bg-white dark:bg-gray-800 hover:bg-black/80 dark:hover:bg-primary hover:text-white relative shadow-xl duration-300 group max-w-[300px]">
       <CardBody className="relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border ">
-        <CardItem translateZ="100" className="w-full pb-0 h-[100px]">
+        <CardItem translateZ="100" className="w-full pb-0 h-[90px]">
           <Image
             src={Product.img}
-            height="1000"
-            width="1000"
-            className="max-w-[140px] block mx-auto transform -translate-y-20 group-hover:scale-105 duration-300 drop-shadow-md"
-            alt="shirts"
+            height="500"
+            width="500"
+            className={`max-w-[140px] ${Product.customClass} block mx-auto  transform  group-hover:scale-105 duration-300 drop-shadow-md`}
+            alt="productos"
           />
         </CardItem>
         <CardItem translateZ="50" className="w-full pt-0">

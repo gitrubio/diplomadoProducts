@@ -13,7 +13,7 @@ export default function UserSection() {
   return (
     <div className='ml-auto flex items-center'>
 
-    <div className='flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'>
+    {/* <div className='flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'>
         <div className='z-10 flex min-h-[16rem] items-center justify-center '>
             <div
                 className={cn(
@@ -39,27 +39,29 @@ export default function UserSection() {
         </div>
         <span aria-hidden='true' className='h-6 w-px bg-gray-200' />
     </div>
-
+ */}
     
 
     {/* Cart */}
-    <div className='ml-4 flow-root lg:ml-6'>
+    <div className='ml-4 flow-root mr-2 lg:ml-6'>
         <NavLink className='group -m-2 flex items-center p-2' to={"/cart"}>
             <ShoppingBagIcon
                 aria-hidden='true'
-                className='h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
+                className='h-6 w-6 flex-shrink-0  '
             />
-            <span className='ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800'>{products.length}</span>
+           {products.length > 0 &&  <span className='ml-2 text-sm font-medium  '>{products.length}</span>}
           
             
         </NavLink> 
+        
     </div>
+    <span aria-hidden='true' className='h-6 w-px mr-1 bg-gray-200' />
    { isLoggedIn ? <>
       <UserProfile userEmail={userEmail} username={username}/>
-   </> : <NavLink to={"/login"} className='group -m-2 flex items-center p-2 ml-4'>
+   </> : <NavLink to={"/login"} className='group -m-2 flex items-center p-2 ml-2'>
             <UserCircleIcon
                 aria-hidden='true'
-                className='h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
+                className='h-7 w-7 flex-shrink-0 '
             />
             </NavLink>}
 </div>

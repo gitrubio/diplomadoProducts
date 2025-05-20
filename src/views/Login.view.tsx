@@ -1,12 +1,12 @@
 import { NavLink } from "react-router-dom";
 import logo from "@/assets/images/ecommerce-logo.webp"
-import useAuht from "@/hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 import { useState } from "react";
 import InternalLoader from "@/components/ui/InternalLoader";
 
 export default function Login() {
     const [loading, setLoading] = useState(false)
-    const { signIn } = useAuht()
+    const { signIn } = useAuth()
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
@@ -22,7 +22,7 @@ export default function Login() {
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                <img alt='' src={logo} className='h-8 w-auto' />
+                <img alt='Ecomerce' src={logo} className='h-8 w-auto' />
                     Ecomerce
                 </a>
                 <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

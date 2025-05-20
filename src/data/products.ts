@@ -2,9 +2,9 @@ import Img1 from '@/assets/women/women.png'
 import Img2 from '@/assets/women/women2.png'
 import Img3 from '@/assets/women/women3.jpg'
 import Img4 from '@/assets/women/women4.jpg'
-import shirt1 from "@/assets/shirt/shirt.png";
-import shirt2 from "@/assets/shirt/shirt2.png";
-import shirt3 from "@/assets/shirt/shirt3.png";
+import shirt1 from "@/assets/images/img_product1.png";
+import shirt2 from "@/assets/images/img_product2.png";
+import shirt3 from "@/assets/images/img_product3.png";
 
 export const ProductsData = [
     {
@@ -54,6 +54,7 @@ export const ProductsData = [
       id: 1,
       img: shirt1,
       title: "Casual Wear",
+      customClass: '-translate-x-4',
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
@@ -61,6 +62,7 @@ export const ProductsData = [
       id: 2,
       img: shirt2,
       title: "Printed shirt",
+      customClass: '-translate-y-14 -translate-x-2',
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
@@ -68,6 +70,7 @@ export const ProductsData = [
       id: 3,
       img: shirt3,
       title: "Women shirt",
+      customClass: '',
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },

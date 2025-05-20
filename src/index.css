@@ -33,3 +33,7 @@
   html {
     overflow-y: scroll;
   }
+
+#imagen-banner {
+  filter: drop-shadow(0 0 0.75rem rgba(17, 17, 17, 0.589));
+}

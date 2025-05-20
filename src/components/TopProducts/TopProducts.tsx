@@ -7,17 +7,25 @@ const TopProducts = ({ handleOrder }: {handleOrder: ()=> void }) => {
     <div>
       <div  className="container">
         {/* Header section */}
-        <div className="text-center mb-24">
-          <p data-aos="fade-up" className="text-ms text-primary">
-            Top Rated Products for you
-          </p>
-          <h1 data-aos="fade-up" className="text-3xl font-bold">
-            Best Products
+        <div className="text-center py-16 space-y-4">
+          <h1 
+            data-aos="fade-up"
+            className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
+          >
+            Productos Destacados
           </h1>
-          <p data-aos="fade-up" className="text-ms text-gray-950">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit
-            asperiores modi Sit asperiores modi
+          <p 
+            data-aos="fade-up" 
+            className="mx-auto max-w-2xl text-lg leading-8 text-gray-600"
+          >
+            Descubre nuestra selección exclusiva de productos más vendidos, 
+            cuidadosamente elegidos para ti.
           </p>
+          <div 
+            className="w-24 h-1 bg-blue-600 mx-auto rounded-full"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          />
         </div>
         {/* Body section */}
         <div data-aos="fade-up"  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20 md:gap-5 place-items-center">

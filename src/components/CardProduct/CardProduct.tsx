@@ -11,7 +11,7 @@ export default function CardProduct({product,discount}: {product: Product, disco
   return (
     <Link to={`${product.id}`} key={product.id} className="group relative shadow-lg p-6 bg-white rounded-lg  ">
     <div className="w-full h-[600px] sm:h-[200px] transition-all  ease-in-out flex items-center justify-center  overflow-hidden rounded-md  lg:aspect-none  lg:h-80">
-    { product.image && <img src={product.image}/>}
+    { product.image && <img src={product.image} alt='imagen de producto'/>}
     { !product.image && <FaImage /> }
     </div>
     <div className="mt-4 flex justify-between">

@@ -1,24 +1,41 @@
 import {  SearchIcon } from 'lucide-react'
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-interface SearchInputProps {
-    searchTerm: string
-    setSearchTerm: (term: string) => void
-}
-export default function SearchInput({ searchTerm, setSearchTerm }: SearchInputProps) {
+
+export default function SearchInput() {
+    const navigate = useNavigate();
+    const [search, setSearch] = useState("")
+
+    useEffect(() => {
+        const storeIdPattern = /^\/store\/[\w-]+$/;
+        
+        if(!window.location.search && !storeIdPattern.test(window.location.pathname)){
+            setSearch("");  
+        }
+    },[window.location.pathname])
 
 
     return (
-        <form  className="flex">
-            <div className="relative">
+        <form  className="flex" onSubmit={(e)=>{
+            e.preventDefault();
+            e.stopPropagation();
+            // @ts-ignore
+            const searchTerm = e.target.search.value;
+            navigate(`/store?search=${searchTerm}`)
+        }}>
+            <div className="relative text-black">
                 <input
-                    placeholder="Buscar..."
-                    className="input shadow-lg focus:border-2 h-12 border-gray-300 px-5 py-3 rounded-xl w-56 transition-all focus:w-64 outline-none"
+                    placeholder="Buscar en Clean Print"
+                    className="w-96  border-2 border-gray-400 focus:border-blue-600 h-12  px-5 py-3 rounded-xl outline-none "
                     name="search"
-                    type="search"
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={search}
+                    onChange={(e)=>{ setSearch(e.target.value) }}
+                    
+                   
                 
                 />
-               {!searchTerm &&  <SearchIcon className="size-6 absolute top-3 right-3 text-gray-500" />}
+              <SearchIcon className="size-6 absolute top-3 right-3 text-gray-500" />
                 
             </div>
         </form>

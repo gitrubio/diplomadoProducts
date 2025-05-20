@@ -3,7 +3,7 @@ import { getUserById, saveUserToFirestore } from "@/api/users.api";
 import useAlertStore from "@/store/alerts";
 import useUserSession from "@/store/store";
 
-const useAuht = () => {
+const useAuth = () => {
     const {login, logout} = useUserSession()
     const { addAlert } = useAlertStore();
 
@@ -12,7 +12,7 @@ const useAuht = () => {
 
        if(user){
        saveUserToFirestore(user.uid,email, name).then(() => {
-        login(user.uid, name, email, false)
+        login(user.uid, name, email, true)
         addAlert(`Welcome to our platform, ${name}! We're excited to have you on board.`, 'success')
        })
         }else {
@@ -30,10 +30,9 @@ const useAuht = () => {
 
     const signIn = async (email: string, password: string): Promise<void> => {
        const user = await loginUser(email, password);
-
+        
        if(user){
         const userData : any = await getUserById(user.uid)
-        console.log(userData);
         
         login(user.uid, userData.username, email, userData.admin ?? false) 
         addAlert(`Welcome back, ${userData.username}!`, 'success')
@@ -50,4 +49,4 @@ const useAuht = () => {
     }
 }
 
-export default useAuht
+export default useAuth

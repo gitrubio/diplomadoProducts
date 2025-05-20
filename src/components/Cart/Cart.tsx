@@ -40,7 +40,7 @@ export default function Cart() {
       <div className="w-full h-[3px] mx-4 rounded-lg bg-gray-300"></div>
     </div>
     <div className="mt-2 mr-4">
-      <h6 className="text-sm font-bold text-gray-800">Shipping</h6>
+      <h6 className="text-sm font-bold text-gray-800">Envío</h6>
     </div>
   </div>
 
@@ -52,7 +52,7 @@ export default function Cart() {
       <div className="w-full h-[3px] mx-4 rounded-lg bg-gray-300"></div>
     </div>
     <div className="mt-2 mr-4">
-      <h6 className="text-sm font-bold text-gray-300">Billing</h6>
+      <h6 className="text-sm font-bold text-gray-300">Facturación</h6>
     </div>
   </div>
 
@@ -63,24 +63,24 @@ export default function Cart() {
       </div>
     </div>
     <div className="mt-2">
-      <h6 className="text-sm font-bold text-gray-300">Confirm</h6>
+      <h6 className="text-sm font-bold text-gray-300">Confirmar</h6>
     </div>
   </div>
 </div>
 
 </div>
-         {products.length === 0 && <h3 className="text-lg font-bold text-gray-800 py-4">No products in the cart</h3>}
+         {products.length === 0 && <h3 className="text-lg font-bold text-gray-800 py-4">No hay productos en el carrito</h3>}
          {products.map((product,index) => (
            <div className="flex items-start max-sm:flex-col gap-4 py-4">
            <div className="h-36 shrink-0">
-             <img src={product.image} className="w-40 h-full object-contain rounded-md" />
+             <img src={product.image} className="w-40 h-full object-contain rounded-md" alt="imagen del producto en el cart" />
            </div>
 
            <div className="flex items-start gap-4 w-full">
              <div>
                <h3 className="text-lg font-bold text-gray-800 mb-1">{product.title}</h3>
                <div className="space-y-1">
-               {product.size && <h6 className="text-sm text-gray-800">Size: {product.size}</h6>}
+               {product.size && <h6 className="text-sm text-gray-800">Talla: {product.size}</h6>}
                   <div className="flex flex-row items-center">
                  <h6 className="text-sm text-gray-800">Color: </h6>
                  <RadioGroup className="flex items-center pl-5">
@@ -99,13 +99,13 @@ export default function Cart() {
                </div>
 
                <div className="mt-4 flex flex-wrap gap-4">
-                 <button onClick={()=>removeAllProduct(product.id)}type="button" className="font-semibold text-red-500 text-sm flex items-center gap-2 shrink-0">
+                 <button onClick={()=>removeAllProduct(product.id)} type="button" className="font-semibold text-red-500 text-sm flex items-center gap-2 shrink-0">
                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 fill-current inline" viewBox="0 0 24 24">
                      <path d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z" data-original="#000000"></path>
                      <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z" data-original="#000000"></path>
                    </svg>
-                   Remove
-                 </button >
+                   Eliminar
+                 </button>
                </div>
              </div>
 
@@ -141,31 +141,31 @@ export default function Cart() {
         </div>
 
         <div className="shadow-md p-6 lg:sticky lg:top-0 h-max">
-          <h3 className="text-lg font-bold text-gray-800 border-b pb-4">Order Summary</h3>
+          <h3 className="text-lg font-bold text-gray-800 border-b pb-4">Resumen del Pedido</h3>
 
           <ul className="text-gray-800 divide-y mt-4">
             <li className="flex flex-wrap gap-4 text-sm py-3">Subtotal <span className="ml-auto font-bold">${total.toFixed(2)}</span></li>
-            <li className="flex flex-wrap gap-4 text-sm py-3">Shipping <span className="ml-auto font-bold">$5.00</span></li>
-            <li className="flex flex-wrap gap-4 text-sm py-3">Tax <span className="ml-auto font-bold">$4.00</span></li>
+            <li className="flex flex-wrap gap-4 text-sm py-3">Envío <span className="ml-auto font-bold">$5.00</span></li>
+            <li className="flex flex-wrap gap-4 text-sm py-3">Impuesto <span className="ml-auto font-bold">$4.00</span></li>
             <li className="flex flex-wrap gap-4 text-sm py-3 font-bold">Total <span className="ml-auto">${(total + 5.00 + 4.00).toFixed(2)}</span></li>
           </ul>
 
           <button type="button" onClick={()=> {
             if(products.length === 0){
-              addAlert('No products in the cart','info')
+              addAlert('No hay productos en el carrito','info')
             }else{
               navigate("/checkout")
             }
-          }} className="mt-4 text-sm px-5 py-2.5 w-full bg-blue-600 hover:bg-blue-700 text-white rounded-md">Make Payment</button>
+          }} className="mt-4 text-sm px-5 py-2.5 w-full bg-blue-600 hover:bg-blue-700 text-white rounded-md">Realizar Pago</button>
 
           <div className="mt-8">
-            <h3 className="text-lg font-bold text-gray-800 mb-4">Apply promo code</h3>
+            <h3 className="text-lg font-bold text-gray-800 mb-4">Aplicar código promocional</h3>
 
             <div className="flex border border-blue-600 overflow-hidden max-w-md rounded-md">
-              <input type="email" placeholder="Promo code"
+              <input type="email" placeholder="Código promocional"
                 className="w-full outline-none bg-white text-gray-600 text-sm px-4 py-2.5" />
               <button type='button' className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 px-5 text-sm text-white">
-                Apply
+                Aplicar
               </button>
             </div>
           </div>
