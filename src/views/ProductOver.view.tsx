@@ -11,6 +11,7 @@ import useProductsCart from '@/store/products'
 import useAlertStore from '@/store/alerts'
 import { FaImage } from 'react-icons/fa'
 import { ArrowBigLeft, ArrowLeft } from 'lucide-react'
+import Loader from '@/components/ui/Loader'
 
 
 const reviews = { href: '#', average: 4, totalCount: 117 }
@@ -23,7 +24,7 @@ function classNames(...classes : any) {
 export default function ProductOverView() {
     
     const { productID } = useParams()
-    const {product}  =  useGetProduct(productID)
+    const {product, loading}  =  useGetProduct(productID)
     const [discount] = useState<IDiscount>(getDiscount())
   
     const [selectedColor, setSelectedColor] = useState<any>(null)
@@ -31,7 +32,15 @@ export default function ProductOverView() {
     const {addProduct} = useProductsCart()
     const { addAlert } = useAlertStore();
     const navigate = useNavigate()
+    const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
+    const nextImage = () => {
+        setCurrentImageIndex((prev) => (prev + 1) % product?.images.length)
+    }
+
+    const prevImage = () => {
+        setCurrentImageIndex((prev) => (prev - 1 + product?.images.length) % product?.images.length)
+    }
     const handleAddProduct = (e : React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
@@ -42,7 +51,7 @@ export default function ProductOverView() {
         quantity: 1,
         price: product.price,
         category: product.category,
-        image: product.image,
+        image: product?.images[0],
         color: selectedColor.class,
         size: selectedSize.name
       })
@@ -51,6 +60,14 @@ export default function ProductOverView() {
       addAlert("Please select a color and size", "error")
      }
     
+    }
+
+    if (loading) {
+      return <div>
+        <div className="h-screen flex items-center justify-center">
+          <Loader/>
+        </div>
+      </div>
     }
   return (
     <div className="bg-white">
@@ -86,15 +103,42 @@ export default function ProductOverView() {
         <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
         
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8 flex flex-col items-center">
-            <div className="w-[300px] h-[500px]   overflow-hidden rounded-lg lg:block">
-            {!product.image && <FaImage /> }
-            <img
-              src={product.image}
-              className="object-cover object-center"
-              about='Image overviewe of product'
-            />
-          </div>
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{product?.title}</h1>
+            <div className="w-[500px] h-[500px] relative overflow-hidden rounded-lg lg:block">
+            {!product?.images[currentImageIndex] && <FaImage className="w-full h-full" />}
+            {product?.images[currentImageIndex] && (
+                <img
+                    src={product.images[currentImageIndex]}
+                    className="w-full h-full object-contain"
+                    alt={`Product image ${currentImageIndex + 1}`}
+                />
+            )}
+            {product?.images.length > 1 && (
+                <div className="absolute w-full inset-0 flex items-center justify-between p-4">
+                    <button
+                        onClick={prevImage}
+                        className="p-2 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow-lg"
+                    >
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
+                    <button
+                        onClick={nextImage}
+                        className="p-2 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow-lg"
+                    >
+                        <ArrowLeft className="w-6 h-6 transform rotate-180" />
+                    </button>
+                </div>
+            )}
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                {product?.images.map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`w-2 h-2 rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-white/50'}`}
+                    />
+                ))}
+            </div>
+        </div>
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl mt-4">{product?.title}</h1>
           </div>
 
           {/* Options */}
@@ -231,3 +275,4 @@ export default function ProductOverView() {
     </div>
   )
 }
+

@@ -1,10 +1,64 @@
 import { db } from "@/config/firebase"
 import { localstorageDiscount } from "@/constants"
 import { IDiscount, Product } from "@/types/products.type"
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, Timestamp, updateDoc } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, QueryDocumentSnapshot, startAfter, Timestamp, updateDoc, where } from "firebase/firestore"
 
 
-export const getProducts = async ( filter: string | null): Promise<Product[]> => {
+type GetProductsOptions = {
+  filter?: string;
+  pageSize?: number;
+  lastVisible?: QueryDocumentSnapshot | null;
+};
+
+export const getProductsPaginated = async ({
+  filter,
+  pageSize = 10,
+  lastVisible = null,
+}: GetProductsOptions): Promise<{
+  products: Product[];
+  lastVisible: QueryDocumentSnapshot | null;
+}> => {
+  try {
+    const productCollectionRef = collection(db, 'products');
+
+    // Construimos la query base
+    let q = query(productCollectionRef, orderBy('title'), limit(pageSize));
+
+    if (lastVisible) {
+      q = query(q, startAfter(lastVisible));
+    }
+
+    const querySnapshot = await getDocs(q);
+
+    let products = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as Product[];
+
+    // Si hay filtro (texto), filtramos manualmente por título o descripción
+    if (filter) {
+      const filterLower = filter.toLowerCase();
+      products = products.filter(
+        (product) =>
+          product.category === filter ||
+          product.title?.toLowerCase().includes(filterLower) ||
+          product.description?.toLowerCase().includes(filterLower)
+      );
+    }
+
+    const newLastVisible = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
+
+    return {
+      products,
+      lastVisible: newLastVisible,
+    };
+  } catch (error) {
+    console.error('Error fetching paginated products:', error);
+    throw new Error('Failed to fetch paginated products');
+  }
+};
+
+export const getProducts = async ( filter?: string | null ): Promise<Product[]> => {
     try {
       const productCollectionRef = collection(db, 'products');
       const querySnapshot = await getDocs(productCollectionRef);
@@ -17,6 +71,8 @@ export const getProducts = async ( filter: string | null): Promise<Product[]> =>
       if(filter){
         return products.filter((product) => product.category === filter || product.title?.toLowerCase().includes(filter.toLowerCase()) || product.description?.toLowerCase().includes(filter.toLowerCase()))
       }
+      console.log(products);
+      
       return products;
     } catch (error) {
       console.error('Error fetching products:', error);

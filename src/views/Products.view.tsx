@@ -12,7 +12,7 @@ export default function Productsview() {
   const [products, setProducts] = useState<Product[]>([])
   const [params] = useSearchParams()
   const filter = params.get('search')
-  const [priceRange, setPriceRange] = useState<number>(1000)
+  const [priceRange, setPriceRange] = useState<number>(100000)
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [selectedColor, setSelectedColor] = useState<string>('All')
   
@@ -35,8 +35,8 @@ export default function Productsview() {
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory
     const matchesPrice = product.price <= priceRange
-    const matchesColor = selectedColor === 'All' || product.colors.some(color => color.name === selectedColor)
-    return matchesCategory && matchesPrice && matchesColor
+   // const matchesColor = selectedColor === 'All' || product.colors.some(color => color.name === selectedColor)
+    return matchesCategory && matchesPrice
   })
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function Productsview() {
                 color='#4F46E5'
                 type="range"
                 min="0"
-                max="500"
+                max="100000"
                 value={priceRange}
                 onChange={(e) => setPriceRange(Number(e.target.value))}
                 className="w-full"
@@ -90,7 +90,7 @@ export default function Productsview() {
             </div>
 
             {/* Filtro por color */}
-            <div className="mb-6">
+          {/*   <div className="mb-6">
               <h4 className="text-sm font-medium mb-2">Colores</h4>
               <div className="flex">
                 {colors.map((color) => (
@@ -119,7 +119,7 @@ export default function Productsview() {
                   </label>
                 ))}
               </div>
-            </div>
+            </div> */}
 
 
           </div>

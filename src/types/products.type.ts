@@ -12,7 +12,7 @@ export interface Product {
         name: string;
         class: string;
     }[]
-    image:       string;
+    images:       string[];
     rating:      Rating;
 }
 

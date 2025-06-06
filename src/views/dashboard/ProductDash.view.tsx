@@ -11,20 +11,23 @@ export default function ProductDash() {
     const [products, setProducts] = useState<Product[]>([])
     const [visible, setVisible] = useState<boolean>(false)
     const [selectedProduct, setSelectedProduct] = useState<Product | undefined>()
+    
+    useEffect(() => {
+      fetchProducts()
+    }, [])
+    
     const fetchProducts = async () => {
         setLoading(true)
         const data = await getProducts()
         setProducts(data)
         setLoading(false)
     }
-    useEffect(() => {
-        fetchProducts()
-    }, [])
 
     const handleClikc = async () => {
+        setSelectedProduct(undefined)
         setVisible(true)
-       
     }
+
     const close = async () => {
         setVisible(false)
         setSelectedProduct(undefined)
@@ -36,13 +39,19 @@ export default function ProductDash() {
         }
         return title.slice(0, maxLength) + '...';
       }
+
       const handleDelete = async (id: string) => {
-        await deleteProduct(id)
-        fetchProducts()
+        const row = document.querySelector(`tr[data-id="${id}"]`);
+        if (row) {
+          row.classList.add('animate__fadeOutLeft');
+          await new Promise(resolve => setTimeout(resolve, 500)); // Esperar a que termine la animación
+        }
+        await deleteProduct(id);
+        setProducts(products.filter(product => product.id !== id));
       }
   return (
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 mt-20">
-       <ModalProduct visible={visible} setVisible={close} onFinish={fetchProducts} product={selectedProduct}/>
+       <ModalProduct key={selectedProduct?.id+''+Date.now()} visible={visible} setVisible={close} onFinish={fetchProducts} product={selectedProduct}/>
     <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
@@ -125,51 +134,37 @@ export default function ProductDash() {
                     </tr>
                     )}
                    {products.map((product) => (
-                     <tr className="border-b dark:border-gray-700">
-                     <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{shortenProductName(product.title,16)}</th>
-                     <td className="px-4 py-3">{product.category}</td>
-                     <td className="px-4 py-3"><div className="flex">
-                     {product.colors.map((color) => (
-                        <div className={`${color.class}  border-2 rounded-xl w-5 h-5`}></div>
-                     ))}
-                     </div></td>
-                     <td className="px-4 py-3">${product.price}</td>
-                     <td className="px-4 py-3 flex items-center justify-end">
-                        <Menu as="div" className="relative inline-block text-left">
-                            <MenuButton>
-                            <button id="apple-imac-27-dropdown-button" data-dropdown-toggle="apple-imac-27-dropdown" className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
-                             <svg className="w-5 h-5" aria-hidden="true" fill="currentColor"  xmlns="http://www.w3.org/2000/svg">
-                                 <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                             </svg>
-                         </button>
-                            </MenuButton>
-                            <MenuItems 
-                            transition
-                            className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in">
-                             <div id="apple-imac-27-dropdown" >
-                                 
-                                 <MenuItem>
-                                     <button onClick={()=>{
-                                        setSelectedProduct(product)
-                                        setVisible(true)
-                                     }} className="flex w-full gap-2 items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                     <FaEdit/>
-                                        Edit
-                                        </button>
-                                    
-                                 </MenuItem>
-                             <MenuItem >
-                             <button onClick={()=>handleDelete(product.id+'')} className="flex w-full gap-2 text-red-500 items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                     <FaTrash/>
-                                        Delete
-                                        </button>
-                             </MenuItem>
-                         </div>
-                            </MenuItems>
-                        </Menu>
-                         
-                        
-                     </td>
+                     <tr 
+                        key={product.id}
+                       data-id={product.id}
+                       className={`border-b dark:border-gray-700 animate__animated animate__fadeInRight `}
+                     >
+                        <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{shortenProductName(product.title,16)}</th>
+                        <td className="px-4 py-3">{product.category}</td>
+                        <td className="px-4 py-3"><div className="flex">
+                        {product.colors.map((color) => (
+                            <div className={`${color.class}  border-2 rounded-xl w-5 h-5`}></div>
+                        ))}
+                        </div></td>
+                        <td className="px-4 py-3">${product.price}</td>
+                        <td className="px-4 py-3 flex items-center justify-end gap-2">
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    setSelectedProduct(product)
+                                    setVisible(true)
+                                }}
+                                className="p-1.5 text-blue-500 hover:bg-blue-100 rounded-lg transition-colors"
+                            >
+                                <FaEdit className="w-4 h-4" />
+                            </button>
+                            <button
+                                onClick={() => handleDelete(product.id + '')}
+                                className="p-1.5 text-red-500 hover:bg-red-100 rounded-lg transition-colors"
+                            >
+                                <FaTrash className="w-4 h-4" />
+                            </button>
+                        </td>
                  </tr>
                    ))}
                     </tbody>

@@ -37,6 +37,10 @@ const useProductsCart = create<ProductsCart>()(
             removeProduct: (productIndex: number) => {
                 const { products } = get()
                     const newProducts = [...products]
+                    if (newProducts[productIndex].quantity === 1) {
+                        newProducts.splice(productIndex, 1)
+                        return set({ products: newProducts })
+                    }
                     newProducts[productIndex].quantity -= 1
                     return set({ products: newProducts })
             },
