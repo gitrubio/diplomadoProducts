@@ -10,6 +10,14 @@ export interface Order {
     }
     products: ProductCartInfo[];
     total: number;
+    shipping: {
+        name: string;
+        email: string;
+        phone: string;
+        address: string;
+        city: string;
+        postalCode: string;
+    }
     payment: {
         type: string,
         titular: string,

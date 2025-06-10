@@ -39,7 +39,7 @@ export default function ProductCardCart({discount, index, product, addProduct, r
 							<h6 className='text-sm text-gray-800'>Color: </h6>
 							<RadioGroup className='flex items-center pl-5'>
 								<Radio
-									value={product?.color}
+									values={product?.color ?? ''}
 									className={classNames(
 										product.color,
 										'relative border border-black -m-0.5 w-6 h-6 flex cursor-pointer items-center justify-center rounded-full p-0.5 '

@@ -25,13 +25,13 @@ export default function Cart() {
 						<div className='flex items-start'>
 							<div className='w-full pb-5'>
 								<div className='flex items-center w-full'>
-									<div className='w-8 h-8 shrink-0 mx-[-1px] bg-gray-800 p-1.5 flex items-center justify-center rounded-full'>
+									<div className='w-8 h-8 shrink-0 mx-[-1px] bg-blue-600 p-1.5 flex items-center justify-center rounded-full'>
 										<span className='text-sm text-white font-bold'>1</span>
 									</div>
 									<div className='w-full h-[3px] mx-4 rounded-lg bg-gray-300'></div>
 								</div>
 								<div className='mt-2 mr-4'>
-									<h6 className='text-sm font-bold text-gray-800'>Envío</h6>
+									<h6 className='text-sm font-bold text-blue-600'>Envío</h6>
 								</div>
 							</div>
 
@@ -43,7 +43,7 @@ export default function Cart() {
 									<div className='w-full h-[3px] mx-4 rounded-lg bg-gray-300'></div>
 								</div>
 								<div className='mt-2 mr-4'>
-									<h6 className='text-sm font-bold text-gray-300'>Facturación</h6>
+									<h6 className='text-sm font-bold text-gray-300'>Datos</h6>
 								</div>
 							</div>
 

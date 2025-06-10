@@ -34,6 +34,7 @@ const sizes = [
     { name: '2XL', inStock: true },
     { name: '3XL', inStock: true },
 ]
+
 export default function ModalProduct({ visible, setVisible, product, onFinish }: ModalProductProps) {
     const { addAlert } = useAlertStore()
     const [images, setImages] = useState<string[]>(product?.images ?? [])
