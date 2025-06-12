@@ -35,7 +35,7 @@ export default function Checkout() {
         }))
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault()
         if (formData.name && formData.email && formData.phone && formData.address) {
             newOrder({
@@ -46,17 +46,15 @@ export default function Checkout() {
                     email: formData.email,
                     phone: formData.phone,
                     address: formData.address,
-                    city: formData.city,
-                    postalCode: formData.postalCode
                 },
-                status: 'payment',
-                user: {
-                    id: userId,
-                    name: username,
-                    email: userEmail
-                }
+                status_history: [
+                    {
+                        status: 'created',
+                        date: new Date().toLocaleString()
+                    }
+                ],
             }).then((id) => {
-                navigate('/payment/' + id)
+                navigate('/invoice/' + id)
                 clearCart()
             })
         } else {
@@ -105,7 +103,7 @@ export default function Checkout() {
                         </div>
                     </div>
 
-                    <form className="m-auto mt-10 max-w-lg bg-white p-8 rounded-xl shadow-lg " onSubmit={handleSubmit}>
+                    <form className="m-auto mt-10 max-w-lg bg-white p-8 rounded-xl shadow-lg ">
                         <h2 className="text-2xl font-extrabold text-gray-800 mb-8">Información de Envío</h2>
 
                         <div className="grid gap-6">
@@ -157,7 +155,7 @@ export default function Checkout() {
                                 />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-6">
+                           {/*  <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-gray-700">Ciudad</label>
                                     <input 
@@ -180,7 +178,7 @@ export default function Checkout() {
                                         className="w-full px-4 py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" 
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                     
@@ -213,6 +211,7 @@ export default function Checkout() {
                                 Regresar
                             </button>
                             <button 
+                                onClick={(e)=>handleSubmit(e)}
                                 type="submit" 
                                 className="min-w-[150px] px-6 py-3.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
                             >

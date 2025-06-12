@@ -7,6 +7,7 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import logo from '@/assets/images/ecommerce-logo.webp'
 import { ArrowUpRightIcon } from "@heroicons/react/16/solid";
 import Orders from "@/views/dashboard/Orders.view";
+import OrderTracker from "@/views/OrderTracker.view";
 export default function Dashboard() {
     const { userEmail, username, } = useUserSession();
 
@@ -97,7 +98,7 @@ export default function Dashboard() {
                     <Route path='/users' element={<div className="p-4  mt-14">users</div>} />
                     <Route path='/products' element={<ProductDash/>} />
                     <Route path='/orders' element={<Orders/>} />
-
+                    <Route path='/order/:id' element={<OrderTracker/>} />
                 </Routes>
             </div>
         </>

@@ -15,17 +15,12 @@ export interface Order {
         email: string;
         phone: string;
         address: string;
-        city: string;
-        postalCode: string;
     }
-    payment: {
-        type: string,
-        titular: string,
-        number: string,
-        expe: string,
-        cvv: string
-    }
-    status: 'payment' | 'incoming' |'completed' | "cancelled";
+    status_history: {
+        status: 'created' | 'payment' | 'incoming' |'completed' | "cancelled";
+        date: string;
+    }[]
+    status: 'created' | 'payment' | 'incoming' |'completed' | "cancelled";
     createdAt: Timestamp;
     updatedAt: Timestamp;
   }

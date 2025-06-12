@@ -1,4 +1,4 @@
-import { getAllOrders, getOrderById, getOrdersByUserId, saveOrder } from "@/api/orders.api";
+import { getAllOrders, getOrderById, getOrdersByUserId, saveOrder, searchOrdersById } from "@/api/orders.api";
 import useAlertStore from "@/store/alerts";
 import useUserSession from "@/store/store";
 import { Order } from "@/types/order.types";
@@ -22,20 +22,27 @@ const getOrderId = async (orderId: string) => {
             return order
         }
 }
-const getOrders = async (userId: string, isAdmin: boolean) => {
-    let orders = []
-        if (isAdmin) {
-            orders = await getAllOrders()
-        } else {
-           orders = await getOrdersByUserId(userId)
-        }
-    return orders
+
+const getOrders = async (userId: string, isAdmin: boolean, pageSize: number = 10, lastVisible?: any) => {
+    let result;
+    if (isAdmin) {
+        result = await getAllOrders(pageSize, lastVisible)
+    } else {
+        result = await getOrdersByUserId(userId, pageSize, lastVisible)
+    }
+    return result
+}
+
+const searchOrders = async (searchTerm: string, pageSize: number = 10, lastVisible?: any) => {
+    const result = await searchOrdersById(searchTerm, userId, admin, pageSize, lastVisible);
+    return result;
 }
 
     return {
         newOrder,
         getOrderId,
-        getOrders
+        getOrders,
+        searchOrders
     }
 }
 
