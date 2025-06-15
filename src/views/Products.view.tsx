@@ -45,14 +45,14 @@ export default function Productsview() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+      <div className="mx-auto max-w-2xl h-[100vh] px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <Loader />
       </div>
     )
   }
 
   return (
-    <div className="bg-white mt-0">
+    <div className="h-[100vh] mt-0">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-4 gap-x-8 gap-y-10 px-4 py-16">
           {/* Filtros laterales */}

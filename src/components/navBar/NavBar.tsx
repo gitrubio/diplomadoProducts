@@ -17,7 +17,7 @@ export default function NavBar({setOpen,navigation}: NavProps) {
      
 
   return (
-    <header className='relative bg-[#131921] text-white '>
+    <header className='absolute font-bold top-0 left-0 right-0 z-50  text-black bg-transparent'>
     <nav aria-label='Top' className='mx-auto  px-4 sm:px-4 lg:px-4'>
         <div className=''>
             <div className='flex h-16 items-center'>
@@ -44,7 +44,7 @@ export default function NavBar({setOpen,navigation}: NavProps) {
                 <PopoverGroup className='hidden lg:ml-8 lg:block lg:self-stretch'>
                     <div className='flex h-full space-x-8'>
                         {navigation.categories.map((category) => (
-                            <NavLink key={category.id} to={category.id} className={`relative z-10 -mb-px flex   items-center   pt-px text-sm font-medium  transition-colors duration-200 ease-out hover:}`}>
+                            <NavLink key={category.id} to={category.id} className={`relative z-10 -mb-px flex   items-center   pt-px text-sm font-bold  transition-colors duration-200 ease-out hover:}`}>
                                 {category.name}
                             </NavLink>
                         ))}

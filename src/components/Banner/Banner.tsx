@@ -6,7 +6,7 @@ import { Image } from "@nextui-org/react";
 
 export default function Banner(){
   return (
-    <div data-aos="fade-up"  className="min-h-[550px] flex justify-center items-center py-12 sm:py-0">
+    <div data-aos="fade-up"  className="min-h-[550px] text-[#3B6F00] flex justify-center items-center py-12 sm:py-0">
       <div className="container">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
           {/* image section */}
@@ -21,13 +21,13 @@ export default function Banner(){
           </div>
 
           {/* text details section */}
-          <div className="flex flex-col justify-center gap-6 sm:pt-0">
+          <div className="flex flex-col justify-center gap-6 sm:pt-0 ">
             <h1 className="text-3xl sm:text-4xl font-bold">
               Winter Sale upto 50% Off
             </h1>
             <p
               
-              className="text-sm text-gray-500 tracking-wide leading-5"
+              className="text-sm  tracking-wide leading-5"
             >
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque
               reiciendis inventore iste ratione ex alias quis magni at optio

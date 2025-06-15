@@ -15,15 +15,15 @@ export default function UserProfile({ username, userEmail }: UserProfileProps) {
     const {Logout} = useAuth()
 
     return (
-        <Menu as="div" className="relative inline-block text-left">
+        <Menu as="div" className="relative inline-block text-left ">
             <MenuButton className="">
                 <div className=" hidden sm:flex items-center gap-4 pl-5">
-                    <div className=" relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-700 rounded-full dark:bg-gray-600">
-                        <span className="font-medium  dark:text-gray-300 text-primary-400 ">{username.charAt(0).toUpperCase() + username.charAt(1).toUpperCase() }</span>
+                    <div className=" relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-white rounded-full dark:bg-gray-600">
+                        <span className="font-bold  dark:text-gray-300 text-[#3B6F00] ">{username.charAt(0).toUpperCase() + username.charAt(1).toUpperCase() }</span>
                     </div>
-                    <div className="flex flex-col items-start font-medium dark:text-white">
+                    <div className="flex flex-col items-start font-bold dark:text-white">
                         <div>{username}</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">{userEmail}</div>
+                        <div className="text-sm dark:text-gray-400">{userEmail}</div>
                     </div>
                 </div>
             </MenuButton>

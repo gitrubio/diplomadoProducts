@@ -37,3 +37,21 @@
 #imagen-banner {
   filter: drop-shadow(0 0 0.75rem rgba(17, 17, 17, 0.589));
 }
+
+.back-products {
+  background-image: url('./assets/website/fondov3.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.back-products::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  pointer-events: none;
+}
