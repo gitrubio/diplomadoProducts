@@ -18,7 +18,7 @@ export default function Subscribe(){
       <div className="container backdrop-blur-sm py-10">
         <div className="space-y-6 max-w-xl mx-auto">
           <h1 className="text-2xl !text-center sm:text-left sm:text-4xl font-semibold">
-            We're the best page to buy your products
+            Empieza tu proyecto con nosotros.
           </h1>
           
         </div>

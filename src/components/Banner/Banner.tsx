@@ -1,4 +1,4 @@
-import BannerImg from "@/assets/women/women2.png";
+import BannerImg from "@/assets/women/pieza muestra.gif";
 import { GrSecure } from "react-icons/gr";
 import { IoFastFood } from "react-icons/io5";
 import { GiFoodTruck } from "react-icons/gi";
@@ -16,38 +16,35 @@ export default function Banner(){
               isBlurred
               src={BannerImg}
               alt=""
-              className="max-w-[400px] h-[350px] w-full mx-auto  object-cover"
+              className="max-w-[400px] h-[350px] w-full mx-auto  object-cover rounded-2xl shadow-lg" 
             />
           </div>
 
           {/* text details section */}
           <div className="flex flex-col justify-center gap-6 sm:pt-0 ">
             <h1 className="text-3xl sm:text-4xl font-bold">
-              Winter Sale upto 50% Off
-            </h1>
-            <p
-              
-              className="text-sm  tracking-wide leading-5"
-            >
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque
-              reiciendis inventore iste ratione ex alias quis magni at optio
+              Aquí tus ideas se hacen realidad.
+              </h1>
+            <p className="text-sm  tracking-wide leading-5">
+              Transformamos tus ideas en objetos reales, impresos con precisión y detalle.
+              Damos forma a proyectos únicos, funcionales o decorativos.
             </p>
             <div className="flex flex-col gap-4">
               <div  className="flex items-center gap-4">
                 <GrSecure className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-violet-100 dark:bg-violet-400" />
-                <p>Quality Products</p>
+                <p>Calidad Profesional Garantizada</p>
               </div>
               <div  className="flex items-center gap-4">
                 <IoFastFood className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-orange-100 dark:bg-orange-400" />
-                <p>Fast Delivery</p>
+                <p> Tiempos de Producción Realistas</p>
               </div>
               <div  className="flex items-center gap-4">
                 <GiFoodTruck className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-green-100 dark:bg-green-400" />
-                <p>Easy Payment method</p>
+                <p>Diseños Personalizados</p>
               </div>
               <div  className="flex items-center gap-4">
                 <GiFoodTruck className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-yellow-100 dark:bg-yellow-400" />
-                <p>Get Offers</p>
+                <p>Pagos Cómodos y Seguros</p>
               </div>
             </div>
           </div>
