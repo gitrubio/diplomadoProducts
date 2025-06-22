@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes slide-animation {
+    0% {
+      transform: translateX(12rem) rotate(12deg);
+      opacity: 0.1;
+    }
+    50% {
+      transform: translateX(-32rem) rotate(12deg);
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateX(12rem) rotate(12deg);
+      opacity: 0.1;
+    }
+  }
+@keyframes meteor {
+    0% {
+      transform: rotate(215deg) translateX(0);
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(215deg) translateX(-500px);
+      opacity: 0;
+    }
+  }
+
+  html {
+    overflow-y: scroll;
+  }
+
+#imagen-banner {
+  filter: drop-shadow(0 0 0.75rem rgba(17, 17, 17, 0.589));
+}
+
+.back-products {
+  background-image: url('./assets/website/fondov3.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.back-products::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  pointer-events: none;
+}
