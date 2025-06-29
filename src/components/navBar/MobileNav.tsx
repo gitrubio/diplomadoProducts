@@ -1,7 +1,8 @@
 import { Categoires } from '@/types/nav.types'
-import { Dialog, DialogBackdrop, DialogPanel, Tab, TabGroup, TabList } from '@headlessui/react'
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-
+import { NavLink } from 'react-router-dom'
+import SearchInput from '../ui/SearchInput'
 
 interface MobileNavProps {
     open: boolean
@@ -35,21 +36,28 @@ export default function MobileNav({open,setOpen,navigation} : MobileNavProps) {
                 </button>
             </div>
 
-            {/* Links */}
-            <TabGroup className='mt-2'>
+            {/* Search for mobile */}
+            <div className='px-4 py-4'>
+                <SearchInput />
+            </div>
+
+            {/* Navigation Links */}
+            <div className='mt-2'>
                 <div className='border-b border-white'>
-                    <TabList className='-mb-px flex flex-col   '>
+                    <div className='flex flex-col'>
                         {navigation.categories.map((category) => (
-                            <Tab
-                                key={category.name}
-                                className='flex-1 border-b-2 border-white  py-4 text-base font-medium'
+                            <NavLink
+                                key={category.id}
+                                to={category.id}
+                                onClick={() => setOpen(false)}
+                                className='border-b border-white py-4 px-4 text-base font-medium hover:bg-gray-800 transition-colors'
                             >
                                 {category.name}
-                            </Tab>
+                            </NavLink>
                         ))}
-                    </TabList>
+                    </div>
                 </div>
-            </TabGroup>
+            </div>
         </DialogPanel>
     </div>
 </Dialog>)

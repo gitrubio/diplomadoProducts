@@ -4,6 +4,7 @@ export interface Product {
     price:       number;
     description: string;
     category:    string;
+    created?: boolean;
     sizes:        {
         name: string;
         inStock: number;

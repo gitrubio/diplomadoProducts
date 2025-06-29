@@ -27,7 +27,7 @@ export default function Public() {
     }
     
     return (
-        <div className='bg-[#F5F5DC]'>
+        <div className='bg-[#F5F5DC] w-[100%] h-[100%]'>
             <div className='bg-transparent'>
                 {/* Mobile menu */}
                 <MobileNav open={open} setOpen={setOpen} navigation={navigation} />

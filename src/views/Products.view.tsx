@@ -15,6 +15,7 @@ export default function Productsview() {
   const [priceRange, setPriceRange] = useState<number>(100000)
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [selectedColor, setSelectedColor] = useState<string>('All')
+  const [showFilters, setShowFilters] = useState<boolean>(false)
   
   const colors = [
     { id: 'All', name: 'Todos los colores', hex: 'transparent' },
@@ -52,11 +53,22 @@ export default function Productsview() {
   }
 
   return (
-    <div className="h-[100vh] mt-0">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid grid-cols-4 gap-x-8 gap-y-10 px-4 py-16">
+    <div className="min-h-screen pt-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Mobile filter toggle */}
+        <div className="lg:hidden mb-4">
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="w-full bg-gray-100 p-3 rounded-lg flex items-center justify-between"
+          >
+            <span className="font-medium">Filtros</span>
+            <span>{showFilters ? '−' : '+'}</span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10 py-8">
           {/* Filtros laterales */}
-          <div className="col-span-1 bg-gray-50 p-6 rounded-lg">
+          <div className={`lg:col-span-1 ${showFilters ? 'block' : 'hidden'} lg:block bg-gray-50 p-4 lg:p-6 rounded-lg`}>
             <h3 className="text-lg font-semibold mb-4">Filtros</h3>
 
             {/* Filtro por categoría */}
@@ -73,7 +85,6 @@ export default function Productsview() {
                 <option value="accessories">Accesorios</option>
               </select>
             </div>
-
 
             {/* Filtro por precio */}
             <div className="mb-6">
@@ -121,21 +132,20 @@ export default function Productsview() {
               </div>
             </div> */}
 
-
           </div>
 
           {/* Contenido principal */}
-          <div className="col-span-3">
-            <div className="flex justify-between mb-6">
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+          <div className="lg:col-span-3">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
                 Nuestros Productos
               </h2>
-              <span className="text-gray-500">
+              <span className="text-sm sm:text-base text-gray-500 font-bold ">
                 {filteredProducts.length} productos encontrados
               </span>
             </div>
 
-            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-x-8 lg:gap-y-10">
               {filteredProducts.map((product) => (
                 <CardProduct key={product.id} product={product} discount={discount} />
               ))}

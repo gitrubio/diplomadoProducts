@@ -90,6 +90,20 @@ export default function OrderTracker() {
         })
     }, [])
 
+    const handleProductCreatedToggle = (productIndex: number) => {
+        if (!order) return
+
+        const updatedProducts = [...order.products]
+        const product = updatedProducts[productIndex]
+        updatedProducts[productIndex] = { ...product, created: !product.created }
+
+        const updatedOrder: Order = {
+            ...order,
+            products: updatedProducts
+        }
+        setOrder(updatedOrder)
+    }
+
     const handleStatusChange = async () => {
         if (!order || isUpdating || !selectedStatus || !InvoiceId) return;
         
@@ -172,18 +186,38 @@ export default function OrderTracker() {
                   <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
                     <h3 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Detalles del Pedido</h3>
                     <div className="space-y-4">
-                      {order.products.map((product) => (
-                        <div key={product.id} className="flex items-center gap-6 rounded-lg border border-gray-100 p-4 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700/50">
+                      {order.products.map((product, index) => (
+                        <div key={product.id} className="flex items-start gap-6 rounded-lg border border-gray-100 p-4 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700/50">
                           <div className="h-20 w-20 shrink-0 overflow-hidden rounded-lg">
                             <img className="h-full w-full object-cover" src={product.image} alt={product.title} />
                           </div>
                           <div className="flex-1">
                             <h4 className="text-base font-medium text-gray-900 dark:text-white">{product.title}</h4>
+                            <div className="mt-1 flex items-center gap-x-4">
+                                <div className="flex items-center gap-2">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Color:</p>
+                                    <div className={`w-4 h-4 rounded-full border border-gray-200 dark:border-gray-600 ${product.color}`} />
+                                </div>
+                                {product.size && (
+                                <div className="flex items-center gap-2">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Tamaño:</p>
+                                    <span className="text-sm font-medium text-gray-800 dark:text-gray-200">{product.size}</span>
+                                </div>
+                                )}
+                            </div>
                             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">ID del Producto: {product.id}</p>
                             <div className="mt-2 flex items-center justify-between">
                               <p className="text-sm font-medium text-gray-900 dark:text-white">Cantidad: {product.quantity}</p>
                               <p className="text-lg font-bold text-primary-600 dark:text-primary-500">${(product.quantity * product.price).toFixed(2)}</p>
                             </div>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={product.created}
+                              onChange={() => handleProductCreatedToggle(index)}
+                              className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                            />
                           </div>
                         </div>
                       ))}

@@ -27,7 +27,7 @@ export default function SearchInput() {
             <div className="relative text-black">
                 <input
                     placeholder="Buscar en Clean Print"
-                    className="w-96  border-2 border-gray-400 focus:border-blue-600 h-12  px-5 py-3 rounded-xl outline-none "
+                    className="w-50 md:w-96  border-2 border-gray-400 focus:border-blue-600 h-12  px-5 py-3 rounded-xl outline-none "
                     name="search"
                     value={search}
                     onChange={(e)=>{ setSearch(e.target.value) }}

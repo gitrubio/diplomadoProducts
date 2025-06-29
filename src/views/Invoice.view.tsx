@@ -12,49 +12,72 @@ export default function Invoice() {
 
     useEffect(() => {
         getOrderId(InvoiceId ?? '').then((order) => {
-            console.log(order)
             setOrder(order)
+            setTimeout(() => {
+              if(order)  sendToWhatsApp(order)
+            }, 1000)
         })
     }, [])
 
+    const sendToWhatsApp = (order: Order) => {
+        const phone = "573245766090"; // Teléfono del negocio, con código de país
+
+        const shippingInfo = `📦 Envío a:\n  Nombre: ${order.shipping.name}\n  📧Email: ${order.shipping.email}\n  Teléfono: ${order.shipping.phone}\n  Dirección: ${order.shipping.address}`;
+      
+        const productLines = order.products.map((item, index) =>
+          `#${index + 1} ${item.title}\n  Color: ${extractColorBase(item.color)}\n  Talla: ${item.size}\n  Cantidad: ${item.quantity}`
+        );
+      
+        const fullMessage = `¡Hola! 👋\nQuisiera realizar el siguiente pedido:\n\n${shippingInfo}\n\n🛍️ Productos:\n\n${productLines.join('\n\n')}\n\nGracias. Quedo atento(a) a tu confirmación.`;
+      
+        const encodedMessage = encodeURIComponent(fullMessage);
+        const url = `https://wa.me/${phone}?text=${encodedMessage}`;
+      
+        window.open(url, '_blank');
+      };
+      
+      const extractColorBase = (bgClass: string): string => {
+        const match = bgClass.match(/^bg-([a-z]+)-?\d*$/);
+        return match ? match[1] : bgClass; // Si no matchea, devuelve la original
+      };
     return (
-        <div className="font-sans  bg-white p-4 lg:max-w-7xl max-w-xl mx-auto">
+        <div className="font-sans pt-20 bg-white p-4 lg:max-w-7xl max-w-xl mx-auto">
             <div className="grid lg:grid-cols-3 gap-10">
                 <div className="lg:col-span-2 max-lg:order-1">
 
                     <div className="flex items-start">
                         <div className="w-full">
                             <div className="flex items-center w-full">
-                                <div className="w-8 h-8 shrink-0 mx-[-1px] bg-blue-600 p-1.5 flex items-center justify-center rounded-full">
+                                <div className="w-8 h-8 shrink-0 mx-[-1px] bg-[#3B6F00] p-1.5 flex items-center justify-center rounded-full">
                                     <span className="text-sm text-white font-bold">1</span>
                                 </div>
-                                <div className="w-full h-[3px] mx-4 rounded-lg bg-blue-600"></div>
+                                <div className="w-full h-[3px] mx-4 rounded-lg bg-[#3B6F00]"></div>
                             </div>
                             <div className="mt-2 mr-4">
-                                <h6 className="text-sm font-bold text-blue-600">Shipping</h6>
+                                <h6 className="text-sm font-bold text-[#3B6F00]">Envío</h6>
                             </div>
                         </div>
                        
                         <div className="w-full">
                             <div className="flex items-center w-full">
-                                <div className="w-8 h-8 shrink-0 mx-[-1px] bg-blue-600 p-1.5 flex items-center justify-center rounded-full">
+                                <div className="w-8 h-8 shrink-0 mx-[-1px] bg-[#3B6F00] p-1.5 flex items-center justify-center rounded-full">
                                     <span className="text-sm text-white font-bold">2</span>
                                 </div>
-                                <div className="w-full h-[3px] mx-4 rounded-lg bg-blue-600"></div>
+                                <div className="w-full h-[3px] mx-4 rounded-lg bg-[#3B6F00]"></div>
                             </div>
                             <div className="mt-2 mr-4">
-                                <h6 className="text-sm font-bold text-blue-600">Billing</h6>
+                                <h6 className="text-sm font-bold text-[#3B6F00]">Datos</h6>
                             </div>
                         </div>
 
                         <div>
                             <div className="flex items-center">
-                                <div className="w-8 h-8 shrink-0 mx-[-1px] bg-blue-600 p-1.5 flex items-center justify-center rounded-full">
+                                <div className="w-8 h-8 shrink-0 mx-[-1px] bg-[#3B6F00] p-1.5 flex items-center justify-center rounded-full">
                                     <span className="text-sm text-white font-bold">3</span>
                                 </div>
                             </div>
                             <div className="mt-2">
-                                <h6 className="text-sm font-bold text-blue-600">Confirm</h6>
+                                <h6 className="text-sm font-bold text-[#3B6F00]">Confirmar</h6>
                             </div>
                         </div>
                     </div>
@@ -65,7 +88,7 @@ export default function Invoice() {
                         <div className="bg-white border rounded-lg shadow-lg px-6 py-8 max-w-md mx-auto mt-20">
                             <div className="flex justify-between items-center mb-6">
                                 <div>
-                                    <h1 className="font-bold text-2xl text-blue-600">Clean Print</h1>
+                                    <h1 className="font-bold text-2xl text-[#3B6F00]">Clean Print</h1>
                                     <p className="text-gray-600 text-sm">Sistema de Impresión</p>
                                 </div>
                                 <div className="text-right">
@@ -122,7 +145,7 @@ export default function Invoice() {
                                     </div>
                                     <div className="flex justify-between py-2">
                                         <span className="font-bold text-gray-800">Total:</span>
-                                        <span className="font-bold text-blue-600">${order.total}</span>
+                                        <span className="font-bold text-[#3B6F00]">${order.total}</span>
                                     </div>
                                 </div>
                             </div>
@@ -135,13 +158,13 @@ export default function Invoice() {
                     )}
                 </div>
                 <div className="bg-gray-100 p-6 rounded-md h-[300px] flex flex-col">
-                    <h2 className="text-4xl font-extrabold text-blue-600">${order?.total}</h2>
+                    <h2 className="text-4xl font-extrabold text-[#3B6F00]">${order?.total}</h2>
                   
-                    <ul className="text-blue-600 mt-8 space-y-4">
+                    <ul className="text-[#3B6F00] mt-8 space-y-4">
                       
                         <li className="flex flex-wrap gap-4 text-sm font-bold border-t-2 pt-4">Total <span className="ml-auto">${(order?.total)}</span></li>
                     </ul>
-                    <button onClick={()=>navigate("/store")} type="submit" className="min-w-[150px] px-6 py-3.5 text-sm bg-blue-600 text-white rounded-md hover:bg-[#111]">Ir a la tienda</button>
+                    <button onClick={()=>navigate("/store")} type="submit" className="min-w-[150px] px-6 py-3.5 text-sm bg-[#3B6F00] text-white rounded-md hover:bg-[#2d5a00]">Ir a la tienda</button>
                 </div>
                
             </div>

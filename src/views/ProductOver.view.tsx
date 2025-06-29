@@ -1,5 +1,4 @@
-
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import { IDiscount } from '@/types/products.type'
@@ -12,14 +11,14 @@ import useAlertStore from '@/store/alerts'
 import { FaImage } from 'react-icons/fa'
 import { ArrowBigLeft, ArrowLeft } from 'lucide-react'
 import Loader from '@/components/ui/Loader'
-
+import { getProduct } from "@/api/products.api"
+import { Product } from "@/types/products.type"
 
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
 function classNames(...classes : any) {
   return classes.filter(Boolean).join(' ')
 }
-
 
 export default function ProductOverView() {
     
@@ -28,23 +27,51 @@ export default function ProductOverView() {
     const [discount] = useState<IDiscount>(getDiscount())
   
     const [selectedColor, setSelectedColor] = useState<any>(null)
-    const [selectedSize, setSelectedSize] = useState<any>(null)
+    const [selectedSize, setSelectedSize] = useState<string | null>(null)
     const {addProduct} = useProductsCart()
     const { addAlert } = useAlertStore();
     const navigate = useNavigate()
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
+    useEffect(() => {
+        if (product) {
+            setSelectedColor(product.colors[0]);
+        }
+    }, [product]);
+
+    // Autoplay functionality
+    useEffect(() => {
+        if (!product?.images || product.images.length <= 1) return;
+
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prev) => 
+                prev === product.images.length - 1 ? 0 : prev + 1
+            );
+        }, 4000); // Change image every 4 seconds
+
+        return () => clearInterval(interval);
+    }, [product?.images]);
+
     const nextImage = () => {
-        setCurrentImageIndex((prev) => (prev + 1) % product?.images.length)
+        if (product?.images) {
+            setCurrentImageIndex((prev) => 
+                prev === product.images.length - 1 ? 0 : prev + 1
+            );
+        }
     }
 
     const prevImage = () => {
-        setCurrentImageIndex((prev) => (prev - 1 + product?.images.length) % product?.images.length)
+        if (product?.images) {
+            setCurrentImageIndex((prev) => 
+                prev === 0 ? product.images.length - 1 : prev - 1
+            );
+        }
     }
+
     const handleAddProduct = (e : React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
-     if (selectedColor?.class && selectedSize?.name ) {
+     if (selectedColor?.class && selectedSize ) {
       addProduct({
         id: product.id,
         title: product.title,
@@ -53,7 +80,7 @@ export default function ProductOverView() {
         category: product.category,
         image: product?.images[0],
         color: selectedColor.class,
-        size: selectedSize.name
+        size: selectedSize
       })
       addAlert("product added to cart", "success")
      }else{
@@ -61,6 +88,13 @@ export default function ProductOverView() {
      }
     
     }
+
+    // Custom sizes array
+    const customSizes = [
+        { name: 'Pequeño', inStock: true },
+        { name: 'Mediano', inStock: true },
+        { name: 'Grande', inStock: true }
+    ];
 
     if (loading) {
       return <div>
@@ -70,7 +104,7 @@ export default function ProductOverView() {
       </div>
     }
   return (
-    <div className="bg-white">
+    <div className="pt-20">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -103,40 +137,52 @@ export default function ProductOverView() {
         <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
         
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8 flex flex-col items-center">
-            <div className="w-[500px] h-[500px] relative overflow-hidden rounded-lg lg:block">
-            {!product?.images[currentImageIndex] && <FaImage className="w-full h-full" />}
+            <div className="w-[400px] h-[500px] relative overflow-hidden rounded-lg lg:block bg-gray-50">
+            {!product?.images[currentImageIndex] && <FaImage className="w-full h-full text-gray-400" />}
             {product?.images[currentImageIndex] && (
-                <img
-                    src={product.images[currentImageIndex]}
-                    className="w-full h-full object-contain"
-                    alt={`Product image ${currentImageIndex + 1}`}
-                />
-            )}
-            {product?.images.length > 1 && (
-                <div className="absolute w-full inset-0 flex items-center justify-between p-4">
-                    <button
-                        onClick={prevImage}
-                        className="p-2 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow-lg"
-                    >
-                        <ArrowLeft className="w-6 h-6" />
-                    </button>
-                    <button
-                        onClick={nextImage}
-                        className="p-2 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow-lg"
-                    >
-                        <ArrowLeft className="w-6 h-6 transform rotate-180" />
-                    </button>
+                <div className="w-full h-full flex transition-transform duration-500 ease-in-out" 
+                     style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}>
+                    {product.images.map((image, index) => (
+                        <img
+                            key={index}
+                            src={image}
+                            className="w-full h-full object-contain flex-shrink-0"
+                            alt={`Product image ${index + 1}`}
+                        />
+                    ))}
                 </div>
             )}
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                {product?.images.map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => setCurrentImageIndex(index)}
-                        className={`w-2 h-2 rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-white/50'}`}
-                    />
-                ))}
-            </div>
+            {product?.images.length > 1 && (
+                <>
+                    <div className="absolute w-full inset-0 flex items-center justify-between p-4">
+                        <button
+                            onClick={prevImage}
+                            className="p-3 rounded-full bg-white/90 hover:bg-white text-gray-800 shadow-lg transition-all duration-200 hover:scale-110"
+                        >
+                            <ArrowLeft className="w-6 h-6" />
+                        </button>
+                        <button
+                            onClick={nextImage}
+                            className="p-3 rounded-full bg-white/90 hover:bg-white text-gray-800 shadow-lg transition-all duration-200 hover:scale-110"
+                        >
+                            <ArrowLeft className="w-6 h-6 transform rotate-180" />
+                        </button>
+                    </div>
+                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3">
+                        {product?.images.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => setCurrentImageIndex(index)}
+                                className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                                    index === currentImageIndex 
+                                        ? 'bg-white shadow-lg scale-125' 
+                                        : 'bg-white/50 hover:bg-white/75'
+                                }`}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
         </div>
         <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl mt-4">{product?.title}</h1>
           </div>
@@ -163,7 +209,7 @@ export default function ProductOverView() {
                   ))}
                 </div>
                 <p className="sr-only">{reviews.average} out of 5 stars</p>
-                <a href={reviews.href} className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                <a href={reviews.href} className="ml-3 text-sm font-medium text-gray-600 hover:text-gray-500">
                   {product.rating.count} reviews
                 </a>
               </div>
@@ -182,7 +228,7 @@ export default function ProductOverView() {
                         value={color}
                         aria-label={color.name}
                         className={classNames(
-                          'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1',
+                          'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1 ring-gray-400',
                         )}
                       >
                         <span
@@ -201,59 +247,44 @@ export default function ProductOverView() {
               {/* Sizes */}
               <div className="mt-10">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                  <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                    Size guide
+                  <h3 className="text-sm font-medium text-gray-900">Talla</h3>
+                  <a href="#" className="text-sm font-medium text-gray-600 hover:text-gray-500">
+                    Guía de tallas
                   </a>
                 </div>
 
-                <fieldset aria-label="Choose a size" className="mt-4">
-                  <RadioGroup
+                <RadioGroup
                     value={selectedSize}
                     onChange={setSelectedSize}
-                    className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
-                  >   {product.sizes.map((size) => (
+                    className="mt-4 grid grid-cols-3 gap-4"
+                  >
+                    {customSizes.map((size) => (
                       <Radio
                         key={size.name}
-                        value={size}
+                        value={size.name}
                         disabled={!size.inStock}
-                        className={classNames(
-                          size.inStock
-                            ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
-                            : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                          'group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500 sm:flex-1 sm:py-6',
-                        )}
+                        className={({ checked }) =>
+                          classNames(
+                            'group relative flex items-center justify-center rounded-md border p-4 text-sm font-medium uppercase',
+                            'cursor-pointer transition-all duration-300 ease-in-out focus:outline-none',
+                            checked
+                              ? 'scale-105 bg-gray-800 text-white shadow-lg border-transparent ring-2 ring-offset-2 ring-gray-800'
+                              : 'bg-white text-gray-900 border-gray-200 hover:bg-gray-50',
+                            !size.inStock
+                              ? 'bg-gray-200 border-gray-200 text-gray-400 cursor-not-allowed'
+                              : ''
+                          )
+                        }
                       >
-                        <span>{size.name}</span>
-                        {size.inStock ? (
-                          <span
-                            aria-hidden="true"
-                            className="pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
-                          />
-                        ) : (
-                          <span
-                            aria-hidden="true"
-                            className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                          >
-                            <svg
-                              stroke="currentColor"
-                              viewBox="0 0 100 100"
-                              preserveAspectRatio="none"
-                              className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                            >
-                              <line x1={0} x2={100} y1={100} y2={0} vectorEffect="non-scaling-stroke" />
-                            </svg>
-                          </span>
-                        )}
+                        {size.name}
                       </Radio>
-                    ))} 
+                    ))}
                   </RadioGroup>
-                </fieldset>
               </div>
 
               <button
                 type="submit"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-800 px-8 py-3 text-base font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
               >
                 Add to bag
               </button>

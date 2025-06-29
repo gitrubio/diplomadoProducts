@@ -5,7 +5,7 @@ import { ThreeDCardDemo } from "@/components/Card-3d/Card3D";
 const TopProducts = ({ handleOrder }: {handleOrder: ()=> void }) => {
   return (
     <div>
-      <div  className="container h-[700px] back-products">
+      <div  className="container min-h-[700px] md:h-[700px] back-products px-4">
         {/* Header section */}
         <div className="text-center py-8 space-y-4">
           <h1 

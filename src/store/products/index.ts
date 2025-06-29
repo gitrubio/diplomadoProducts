@@ -9,6 +9,7 @@ export interface ProductCartInfo {
     category: string;
     color: string;
     size?: string;
+    created?: boolean;
 }
 interface ProductsCart {
     products: ProductCartInfo[];

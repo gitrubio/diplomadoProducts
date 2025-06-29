@@ -13,7 +13,7 @@ export default function Checkout() {
     const {addAlert} = useAlertStore()
     const {userId,username,userEmail} = useUserSession()
     const { newOrder } = useOrder()
-    const [discount] = useState<IDiscount>(getDiscount())
+    const [disabled, setDisabled] = useState<boolean>(false)
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ export default function Checkout() {
         postalCode: ""
     })
 
-    const total = products.reduce((acc, product) => acc + (+productPrice(product.price,discount))*product.quantity, 0)
+    const total = products.reduce((acc, product) => acc + (+productPrice(product.price,{discount:0,id:0}))*product.quantity, 0)
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -37,9 +37,10 @@ export default function Checkout() {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        if (formData.name && formData.email && formData.phone && formData.address) {
+        setDisabled(true)
+        if (formData.name && formData.email && formData.phone && formData.address && !disabled) {
             newOrder({
-                products: products.map((product) => ({...product, price: +productPrice(product.price,discount)})),
+                products: products.map((product) => ({...product, price: +productPrice(product.price,{discount:0,id:0}), created: false})),
                 total: total + 5.00 + 4.00,
                 shipping: {
                     name: formData.name,
@@ -50,7 +51,7 @@ export default function Checkout() {
                 status_history: [
                     {
                         status: 'created',
-                        date: new Date().toLocaleString()
+                        date: new Date().toISOString()
                     }
                 ],
             }).then((id) => {
@@ -58,55 +59,60 @@ export default function Checkout() {
                 clearCart()
             })
         } else {
+            setDisabled(false)
             addAlert("Por favor complete todos los campos requeridos", "error")
         }
     }
 
     return (
-        <div className="font-sans bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-4 lg:max-w-7xl max-w-xl mx-auto">
-            <div className="grid lg:grid-cols-3 gap-10 ">
-                <div className="lg:col-span-2 max-lg:order-1">
-                    <div className="flex items-start">
-                        <div className="w-full">
-                            <div className="flex items-center w-full ">
-                                <div className="w-8 h-8 shrink-0 mx-[-1px] bg-blue-600 p-1.5 flex items-center justify-center rounded-full shadow-lg">
-                                    <span className="text-sm text-white font-bold">1</span>
-                                </div>
-                                <div className="w-full h-[3px] mx-4 rounded-lg bg-blue-600"></div>
-                            </div>
-                            <div className="mt-2 mr-4">
-                                <h6 className="text-sm font-bold text-blue-600">Envío</h6>
-                            </div>
-                        </div>
+        <div className="w-[100%] h-[100dvh]  font-sans pt-20 px-4 ">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10">
+                {/* Steps - First on mobile, second on desktop */}
+                <div className="order-1 lg:order-1 lg:col-span-2">
+                <div className='flex items-start '>
+							<div className='w-full pb-5 min-w-0'>
+								<div className='flex items-center w-full px-2'>
+									<div className='w-6 h-6 sm:w-8 sm:h-8 shrink-0 mx-[-1px] bg-[#3B6F00] p-1 sm:p-1.5 flex items-center justify-center rounded-full'>
+										<span className='text-xs sm:text-sm text-white font-bold'>1</span>
+									</div>
+									<div className='w-full h-[3px] mx-2 sm:mx-4 rounded-lg bg-[#3B6F00]'></div>
+								</div>
+								<div className='mt-2 mr-2 sm:mr-4'>
+									<h6 className='text-xs sm:text-sm font-bold text-[#3B6F00]'>Envío</h6>
+								</div>
+							</div>
 
-                        <div className="w-full ">
-                            <div className="flex items-center w-full">
-                                <div className="w-8 h-8 shrink-0 mx-[-1px] bg-blue-600 p-1.5 flex items-center justify-center rounded-full">
-                                    <span className="text-sm text-white font-bold">2</span>
-                                </div>
-                                <div className="w-full h-[3px] mx-4 rounded-lg bg-gray-300"></div>
-                            </div>
-                            <div className="mt-2 mr-4">
-                                <h6 className="text-sm font-bold text-blue-600">Datos</h6>
-                            </div>
-                        </div>
+							<div className='w-full min-w-0'>
+								<div className='flex items-center w-full'>
+									<div className='w-6 h-6 sm:w-8 sm:h-8 shrink-0 mx-[-1px] bg-[#3B6F00] p-1 sm:p-1.5 flex items-center justify-center rounded-full'>
+										<span className='text-xs sm:text-sm text-white font-bold'>2</span>
+									</div>
+									<div className='w-full h-[3px] mx-2 sm:mx-4 rounded-lg bg-white'></div>
+								</div>
+								<div className='mt-2 mr-2 sm:mr-4'>
+									<h6 className='text-xs sm:text-sm font-bold text-[#3B6F00]'>Datos</h6>
+								</div>
+							</div>
 
-                        <div>
-                            <div className="flex items-center">
-                                <div className="w-8 h-8 shrink-0 mx-[-1px] bg-gray-200 p-1.5 flex items-center justify-center rounded-full">
-                                    <span className="text-sm text-white font-bold">3</span>
-                                </div>
-                            </div>
-                            <div className="mt-2">
-                                <h6 className="text-sm font-bold text-gray-300">Confirmar</h6>
-                            </div>
-                        </div>
-                    </div>
+							<div className='w-[30%] min-w-0'>
+								<div className='flex items-center'>
+									<div className='w-6 h-6 sm:w-8 sm:h-8 shrink-0 mx-[-1px] bg-white p-1 sm:p-1.5 flex items-center justify-center rounded-full'>
+										<span className='text-xs sm:text-sm text-black font-bold'>3</span>
+									</div>
+								</div>
+								<div className='mt-2'>
+									<h6 className='text-xs sm:text-sm font-bold text-black'>Confirmar</h6>
+								</div>
+							</div>
+						</div>
+                </div>
 
-                    <form className="m-auto mt-10 max-w-lg bg-white p-8 rounded-xl shadow-lg ">
-                        <h2 className="text-2xl font-extrabold text-gray-800 mb-8">Información de Envío</h2>
+                {/* Form - Second on mobile, first on desktop */}
+                <div className="order-2 lg:order-2 lg:col-span-2 ">
+                    <form className="m-auto  max-w-lg bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg">
+                        <h2 className="text-xl sm:text-2xl font-extrabold text-gray-800 mb-6 sm:mb-8">Información de Envío</h2>
 
-                        <div className="grid gap-6">
+                        <div className="grid gap-4 sm:gap-6">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-gray-700">Nombre Completo</label>
                                 <input 
@@ -115,7 +121,7 @@ export default function Checkout() {
                                     placeholder="Ingrese su nombre completo"
                                     value={formData.name}
                                     onChange={handleInputChange}
-                                    className="w-full px-4 py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" 
+                                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#3B6F00] focus:ring-1 focus:ring-[#3B6F00] transition-colors" 
                                 />
                             </div>
 
@@ -127,7 +133,7 @@ export default function Checkout() {
                                     placeholder="ejemplo@correo.com"
                                     value={formData.email}
                                     onChange={handleInputChange}
-                                    className="w-full px-4 py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" 
+                                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#3B6F00] focus:ring-1 focus:ring-[#3B6F00] transition-colors" 
                                 />
                             </div>
 
@@ -139,7 +145,7 @@ export default function Checkout() {
                                     placeholder="+52 (123) 456-7890"
                                     value={formData.phone}
                                     onChange={handleInputChange}
-                                    className="w-full px-4 py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" 
+                                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#3B6F00] focus:ring-1 focus:ring-[#3B6F00] transition-colors" 
                                 />
                             </div>
 
@@ -151,7 +157,7 @@ export default function Checkout() {
                                     placeholder="Calle y número"
                                     value={formData.address}
                                     onChange={handleInputChange}
-                                    className="w-full px-4 py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" 
+                                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#3B6F00] focus:ring-1 focus:ring-[#3B6F00] transition-colors" 
                                 />
                             </div>
 
@@ -164,7 +170,7 @@ export default function Checkout() {
                                         placeholder="Ciudad"
                                         value={formData.city}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" 
+                                        className="w-full px-4 py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#3B6F00] focus:ring-1 focus:ring-[#3B6F00] transition-colors" 
                                     />
                                 </div>
                                 <div className="space-y-2">
@@ -175,20 +181,19 @@ export default function Checkout() {
                                         placeholder="C.P."
                                         value={formData.postalCode}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" 
+                                        className="w-full px-4 py-3 bg-gray-50 text-gray-800 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-[#3B6F00] focus:ring-1 focus:ring-[#3B6F00] transition-colors" 
                                     />
                                 </div>
                             </div> */}
                         </div>
-
-                    
                     </form>
                 </div>
 
-                <div className="bg-white p-8 rounded-xl shadow-lg h-fit">
-                    <h2 className="text-4xl font-extrabold text-gray-800 mb-8">${total.toFixed(2)}</h2>
+                {/* Payment Summary - Third on mobile, third on desktop */}
+                <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg h-fit order-3 lg:order-3">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800 mb-6 sm:mb-8">${total.toFixed(2)}</h2>
 
-                    <ul className="text-gray-800 space-y-4">
+                    <ul className="text-gray-800 space-y-3 sm:space-y-4">
                         <li className="flex flex-wrap gap-4 text-sm py-2 border-b border-gray-100">
                             <span>Envío</span>
                             <span className="ml-auto font-bold">$20.00</span>
@@ -199,28 +204,28 @@ export default function Checkout() {
                         </li>
                         <li className="flex flex-wrap gap-4 text-sm font-bold pt-4">
                             <span>Total</span>
-                            <span className="ml-auto text-blue-600">${(total + 5.00 + 4.00).toFixed(2)}</span>
+                            <span className="ml-auto text-[#3B6F00]">${(total + 5.00 + 4.00).toFixed(2)}</span>
                         </li>
-                        <li className="mt-8 flex-row justify-end w-full ">
-                        <div className="flex flex-wrap gap-2 mt-8">
+                        <li className="mt-6 sm:mt-8">
+                        <div className="flex flex-col h-14 sm:flex-row gap-3 sm:gap-2 mt-6 sm:mt-8">
                             <button 
                                 type="button" 
                                 onClick={()=>navigate("/cart")} 
-                                className="min-w-[150px] px-6 py-3.5 text-sm bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition-colors shadow-sm"
+                                className="w-full sm:min-w-[150px] px-4 sm:px-6 py-3 sm:py-3.5 text-sm bg-gray-100 text-gray-800 rounded-lg hover:bg-gray-200 transition-colors shadow-sm"
                             >
                                 Regresar
                             </button>
-                            <button 
+                            <button
+                                disabled={disabled}
                                 onClick={(e)=>handleSubmit(e)}
                                 type="submit" 
-                                className="min-w-[150px] px-6 py-3.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
+                                className="w-full sm:min-w-[150px] px-4 sm:px-6 py-3 sm:py-3.5 text-sm bg-[#3B6F00] text-white rounded-lg hover:bg-[#2d5a00] transition-colors shadow-lg"
                             >
-                                Continuar al Pago
+                                Continuar
                             </button>
                         </div>
                         </li>
                     </ul>
-                    
                 </div>
             </div>
         </div>

@@ -18,18 +18,18 @@ const settings: Settings = {
 }
 export default function SliderComponent() {
     return (
-        <div className='relative overflow-hidden min-h-[550px] max-h-[560px] sm:min-h-[400px] bg-[#F5F5DC] flex justify-center items-center dark:bg-gray-950 dark:text-white duration-500'>
+        <div className='relative overflow-hidden min-h-[400px] sm:min-h-[450px] md:min-h-[500px] lg:min-h-[550px] max-h-[600px] bg-[#F5F5DC] flex justify-center items-center dark:bg-gray-950 dark:text-white duration-500'>
             {/**background pattern*/}
-            <div className='h-[100%] w-[600px] bg-[#3B6F00] absolute -top-[54%] right-0 rounded-3xl rotate-45 -z-9'>
+            <div className='h-[100%] w-[300px] sm:w-[400px] md:w-[500px] lg:w-[600px] bg-[#3B6F00] absolute -top-[54%] right-0 rounded-3xl rotate-45 -z-9'>
             </div>
-            <div className='container pb-8 sm:pb-0'>
+            <div className='container pb-8 sm:pb-0 px-4'>
                 <Slider {...settings}>
                     {ImagesList.map((image,index) => (
                      <div key={image.id}>
-                     <div className='grid grid-cols-1 sm:grid-cols-2'>
-                         <div className='flex flex-col justify-center gap-4 pt-12 sm:pt-0 text-center sm:text-left order-2 sm:order-1 relative z-10'>
-                             <h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-[#3B6F00] drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]'>{image.title}</h1>
-                             <p className='text-ms text-[#3B6F00] drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]'>
+                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8'>
+                         <div className='flex flex-col justify-center gap-4 pt-8 lg:pt-0 text-center lg:text-left order-2 lg:order-1 relative z-10'>
+                             <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#3B6F00] drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]'>{image.title}</h1>
+                             <p className='text-sm sm:text-base md:text-lg text-[#3B6F00] drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]'>
                                 {image.description}
                              </p>
                            {/*   <Button radius='full' size='sm' className='max-w-[100px] bg-gradient-to-r from-[#3B6F00] to-[#6B8E23] transition-all text-white py-2 px-4'>
@@ -37,13 +37,13 @@ export default function SliderComponent() {
                              </Button> */}
 
                          </div>
-                                <div className='order-1 sm:order-2'>
+                                <div className='order-1 lg:order-2 flex justify-center'>
                                     <div data-aos="zoom-in" data-aos-once="true" className='relative z-10'>
                                         <img
                                             id='imagen-banner'
                                             src={image.src}
                                             alt={"nothing" + index}
-                                            className='w-[300px] h-[300px] sm:h-[350px] sm:w-[350px] sm:scale-125 object-contain mx-auto mt-12'
+                                            className='w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] lg:scale-125 object-contain mx-auto'
                                         />
                                 </div>
                          </div>

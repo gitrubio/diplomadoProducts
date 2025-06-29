@@ -5,7 +5,7 @@ import TopProducts from '@/components/TopProducts/TopProducts'
 
 export default function Home() {
   return (
-    <div className='flex flex-col' >
+    <div className='flex flex-col w-full min-h-screen' >
     <SliderComponent />
     <TopProducts handleOrder={()=>{}} />
     <Banner />
