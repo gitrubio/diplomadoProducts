@@ -1,11 +1,10 @@
 import { PopoverGroup } from '@headlessui/react'
 import { Bars3Icon } from '@heroicons/react/24/outline'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import UserSection from '../userSection/UserSection'
 import { Categoires } from '@/types/nav.types'
 import logo from "@/assets/images/logo_b_e_r.png"
 import SearchInput from '../ui/SearchInput'
-import { useState } from 'react'
     interface NavProps {
         setOpen: (value: boolean) => void
         navigation: {
@@ -13,7 +12,7 @@ import { useState } from 'react'
         }
     }
 
-export default function NavBar({setOpen,navigation}: NavProps) {
+export default function NavBar({setOpen,navigation}: Readonly<NavProps>) {
      
 
   return (

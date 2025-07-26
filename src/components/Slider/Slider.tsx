@@ -1,4 +1,3 @@
-import { Button } from '@nextui-org/react'
 import Slider, { Settings } from 'react-slick'
 import { ImagesList } from '@/data/hero'
 

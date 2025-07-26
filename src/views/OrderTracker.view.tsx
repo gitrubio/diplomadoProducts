@@ -71,7 +71,6 @@ const ORDER_STATUSES = [
 
 export default function OrderTracker() {
     const { id: InvoiceId} = useParams()
-    const [searchParams] = useSearchParams()
     const [order, setOrder] = useState<Order|undefined>()
     const [isShippingOpen, setIsShippingOpen] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
@@ -79,7 +78,6 @@ export default function OrderTracker() {
     const [selectedStatus, setSelectedStatus] = useState<string>('')
     const {getOrderId} = useOrder()
     const { addAlert } = useAlertStore()
-    const from = searchParams.get('from')
 
     useEffect(() => {
         getOrderId(InvoiceId ?? '').then((order) => {
@@ -160,7 +158,7 @@ export default function OrderTracker() {
             };
             setOrder(updatedOrder);
             addAlert('Pedido cancelado correctamente', 'success');
-        } catch (error) {
+        } catch {
             addAlert('Error al cancelar el pedido', 'error');
         } finally {
             setIsUpdating(false);

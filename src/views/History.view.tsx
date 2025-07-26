@@ -10,9 +10,8 @@ export default function History() {
     const { userId } = useUserSession()
 
     useEffect(() => {
-        getOrders(userId, false).then((orders) => {
-            console.log(orders)
-            setOrders(orders)
+        getOrders(userId, false).then((data) => {
+            setOrders(data.orders || [])
         })
     }, [])
 

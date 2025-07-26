@@ -1,7 +1,7 @@
 import { db } from "@/config/firebase"
 import { localstorageDiscount } from "@/constants"
 import { IDiscount, Product } from "@/types/products.type"
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, QueryDocumentSnapshot, startAfter, Timestamp, updateDoc, where } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, QueryDocumentSnapshot, startAfter, Timestamp, updateDoc } from "firebase/firestore"
 
 
 type GetProductsOptions = {

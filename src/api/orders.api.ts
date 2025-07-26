@@ -24,7 +24,7 @@ export const saveOrder = async (order: Partial<Order>): Promise<string> => {
   }
 };
 
-export const getOrderById = async (orderId: string,userId: string, admin: boolean): Promise<Order | null> => {
+export const getOrderById = async (orderId: string): Promise<Order | null> => {
     try {
       // Referencia al documento con el ID en la colección "orders"
       const orderRef = doc(db, "orders", orderId);

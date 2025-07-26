@@ -14,17 +14,9 @@ export default function Productsview() {
   const filter = params.get('search')
   const [priceRange, setPriceRange] = useState<number>(100000)
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [selectedColor, setSelectedColor] = useState<string>('All')
   const [showFilters, setShowFilters] = useState<boolean>(false)
   
-  const colors = [
-    { id: 'All', name: 'Todos los colores', hex: 'transparent' },
-    { id: 'Black', name: 'Negro', hex: '#111827' },
-    { id: 'White', name: 'Blanco', hex: '#ffffff' },
-    { id: 'Gray', name: 'Gris', hex: '#E5E7EB' },
-    { id: 'Blue', name: 'Azul', hex: "#1D4ED8" },
-    { id: 'Red', name: 'Rojo', hex: '#D43146' }
-  ]
+
 
   const fetchProducts = async () => {
     setLoading(true)
@@ -36,7 +28,6 @@ export default function Productsview() {
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory
     const matchesPrice = product.price <= priceRange
-   // const matchesColor = selectedColor === 'All' || product.colors.some(color => color.name === selectedColor)
     return matchesCategory && matchesPrice
   })
 

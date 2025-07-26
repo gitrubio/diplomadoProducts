@@ -1,6 +1,4 @@
-import { cn } from '@/lib/utils'
 import useUserSession from '@/store/store'
-import { StarIcon } from '@heroicons/react/16/solid'
 import { UserCircleIcon } from '@heroicons/react/24/outline'
 import { ShoppingBagIcon } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
@@ -29,9 +27,9 @@ export default function UserSection() {
         
     </div>
     
-   { isLoggedIn ? <>
+   { isLoggedIn ? 
       <UserProfile userEmail={userEmail} username={username}/>
-   </> : <NavLink to={"/login"} className='group -m-2 flex items-center p-2 ml-2'>
+    : <NavLink to={"/login"} className='group -m-2 flex items-center p-2 ml-2'>
             <UserCircleIcon
                 aria-hidden='true'
                 className='h-7 w-7 flex-shrink-0 '

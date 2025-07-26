@@ -9,10 +9,8 @@ import { getDiscount } from '@/api/products.api'
 import useProductsCart from '@/store/products'
 import useAlertStore from '@/store/alerts'
 import { FaImage } from 'react-icons/fa'
-import { ArrowBigLeft, ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import Loader from '@/components/ui/Loader'
-import { getProduct } from "@/api/products.api"
-import { Product } from "@/types/products.type"
 
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
@@ -107,10 +105,15 @@ export default function ProductOverView() {
     <div className="pt-20">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
-          <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div onClick={()=> {navigate(-1)}} className='hover:cursor-pointer'>
+          <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className="hover:cursor-pointer bg-transparent border-none p-0"
+            aria-label="Go back"
+          >
             <ArrowLeft className="w-5 h-5 text-gray-700" />
-          </div>
+          </button>
                 <div className="flex items-center">
                   <p className="mr-2 text-sm font-medium text-gray-900">
                     {product?.category}
@@ -142,12 +145,12 @@ export default function ProductOverView() {
             {product?.images[currentImageIndex] && (
                 <div className="w-full h-full flex transition-transform duration-500 ease-in-out" 
                      style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}>
-                    {product.images.map((image, index) => (
+                    {product.images.map((image) => (
                         <img
-                            key={index}
+                            key={image}
                             src={image}
                             className="w-full h-full object-contain flex-shrink-0"
-                            alt={`Product image ${index + 1}`}
+                            alt={product?.title || "Product"}
                         />
                     ))}
                 </div>
@@ -171,7 +174,7 @@ export default function ProductOverView() {
                     <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3">
                         {product?.images.map((_, index) => (
                             <button
-                                key={index}
+                                key={index + 'indicator'}
                                 onClick={() => setCurrentImageIndex(index)}
                                 className={`w-3 h-3 rounded-full transition-all duration-200 ${
                                     index === currentImageIndex 
@@ -248,7 +251,7 @@ export default function ProductOverView() {
               <div className="mt-10">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-medium text-gray-900">Talla</h3>
-                  <a href="#" className="text-sm font-medium text-gray-600 hover:text-gray-500">
+                  <a href="/" className="text-sm font-medium text-gray-600 hover:text-gray-500">
                     Guía de tallas
                   </a>
                 </div>

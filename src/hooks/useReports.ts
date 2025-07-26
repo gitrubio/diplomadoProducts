@@ -13,7 +13,7 @@ const useReports = () => {
     const getReports = async () => {
         try {
             const data = await getAllOrders();
-            return organizeOrdersByDay(data);
+            return organizeOrdersByDay(data.orders);
         } catch (error) {
             console.error(error);
         }

@@ -17,7 +17,7 @@ const useOrder = () => {
     }
 
 const getOrderId = async (orderId: string) => {
-        const order = await getOrderById(orderId,userId,admin);
+        const order = await getOrderById(orderId);
         if(order){
             return order
         }

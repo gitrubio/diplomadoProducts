@@ -1,17 +1,15 @@
-import { getDiscount } from "@/api/products.api"
 import useOrder from "@/hooks/useOrder"
 import { productPrice } from "@/lib/utils"
 import useAlertStore from "@/store/alerts"
 import useProductsCart from "@/store/products"
 import useUserSession from "@/store/store"
-import { IDiscount } from "@/types/products.type"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 export default function Checkout() {
     const {products, clearCart} = useProductsCart()
     const {addAlert} = useAlertStore()
-    const {userId,username,userEmail} = useUserSession()
+    const {username,userEmail} = useUserSession()
     const { newOrder } = useOrder()
     const [disabled, setDisabled] = useState<boolean>(false)
     const navigate = useNavigate()
@@ -114,8 +112,9 @@ export default function Checkout() {
 
                         <div className="grid gap-4 sm:gap-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-700">Nombre Completo</label>
+                                <label htmlFor="name" className="text-sm font-medium text-gray-700">Nombre Completo</label>
                                 <input 
+                                    id="name"
                                     type="text" 
                                     name="name"
                                     placeholder="Ingrese su nombre completo"
@@ -126,7 +125,7 @@ export default function Checkout() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-700">Correo Electrónico</label>
+                                <label htmlFor="email" className="text-sm font-medium text-gray-700">Correo Electrónico</label>
                                 <input 
                                     type="email" 
                                     name="email"
@@ -138,7 +137,7 @@ export default function Checkout() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-700">Teléfono</label>
+                                <label htmlFor="tel" className="text-sm font-medium text-gray-700">Teléfono</label>
                                 <input 
                                     type="tel" 
                                     name="phone"
@@ -150,7 +149,7 @@ export default function Checkout() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-700">Dirección</label>
+                                <label htmlFor="text" className="text-sm font-medium text-gray-700">Dirección</label>
                                 <input 
                                     type="text" 
                                     name="address"
