@@ -3,7 +3,7 @@ import useOrder from "@/hooks/useOrder"
 import { Order } from "@/types/order.types"
 import { ArrowTurnUpLeftIcon, TruckIcon, UserIcon, PhoneIcon, EnvelopeIcon, MapPinIcon, ChevronDownIcon, XMarkIcon } from "@heroicons/react/20/solid"
 import { useEffect, useState } from "react"
-import { NavLink, useParams, useSearchParams } from "react-router-dom"
+import { NavLink, useParams } from "react-router-dom"
 import useAlertStore from "@/store/alerts"
 import { updateOrderStatus } from "@/api/orders.api"
 

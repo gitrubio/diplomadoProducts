@@ -2,7 +2,6 @@ import useAuth from "@/hooks/useAuth"
 import useUserSession from "@/store/store"
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { ClockIcon, ComputerDesktopIcon } from "@heroicons/react/16/solid"
-import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline"
 import { FaSignOutAlt } from "react-icons/fa"
 import { NavLink } from "react-router-dom"
 
